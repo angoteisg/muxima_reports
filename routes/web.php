@@ -15,13 +15,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {return redirect()->route('login');});
 
+/*Route::get('/inicio',function(){
+    return view('layouts.app');
+});*/
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('dashboard.dashboard');
     })->name('dashboard');
 });
 
