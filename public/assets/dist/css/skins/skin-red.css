@@ -3,7 +3,7 @@
  * ---------
  */
 .skin-red .main-header .navbar {
-  background-color: #dd4b39;
+  background-color: linear-gradient(45deg,  #223b48 5%,#8c1014 5%);
 }
 .skin-red .main-header .navbar .nav > li > a {
   color: #ffffff;
@@ -29,7 +29,7 @@
   color: #fff;
 }
 .skin-red .main-header .navbar .sidebar-toggle:hover {
-  background-color: #d73925;
+  background-color: #8c1014;
 }
 @media (max-width: 767px) {
   .skin-red .main-header .navbar .dropdown-menu li.divider {
@@ -39,19 +39,19 @@
     color: #fff;
   }
   .skin-red .main-header .navbar .dropdown-menu li a:hover {
-    background: #d73925;
+    background: #8c1014;
   }
 }
 .skin-red .main-header .logo {
-  background-color: #d73925;
+  background-color: #8c1014;
   color: #ffffff;
   border-bottom: 0 solid transparent;
 }
 .skin-red .main-header .logo:hover {
-  background-color: #d33724;
+  background-color: #8c1014;
 }
 .skin-red .main-header li.user-header {
-  background-color: #dd4b39;
+  background-color: #8c1014;
 }
 .skin-red .content-header {
   background: transparent;
@@ -59,7 +59,7 @@
 .skin-red .wrapper,
 .skin-red .main-sidebar,
 .skin-red .left-side {
-  background-color: #222d32;
+  background-color: linear-gradient(45deg,  #223b48 5%,#8c1014 5%);
 }
 .skin-red .user-panel > .info,
 .skin-red .user-panel > .info > a {
@@ -79,7 +79,7 @@
   background: #1e282c;
 }
 .skin-red .sidebar-menu > li.active > a {
-  border-left-color: #dd4b39;
+  border-left-color: #8c1014;
 }
 .skin-red .sidebar-menu > li > .treeview-menu {
   margin: 0 1px;

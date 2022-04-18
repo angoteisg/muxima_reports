@@ -22,6 +22,12 @@ body {
   font-weight: 400;
   overflow-x: hidden;
   overflow-y: auto;
+  background: url('../imagens/background-photo.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
 }
 /* Layout */
 .wrapper {

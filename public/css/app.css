@@ -43,6 +43,13 @@ html {
 body {
   margin: 0; /* 1 */
   line-height: inherit; /* 2 */
+  max-height: 1000px;
+height: 800px;
+  background: url('../imagens/background-photo.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 /*
@@ -217,6 +224,28 @@ progress {
   vertical-align: baseline;
 }
 
+
+
+/*
+AUTENTICAÇÃO
+
+*/
+.autenticacao{
+  max-width:450px;
+  width:50%;
+ max-height: 500px;
+ height: 80%;
+  padding: 2%;
+  border-radius: 10px;
+ background-color: #26313f49;
+ left      : 50%;
+ top       : 50%;
+ position  : absolute;
+ transform : translate(-50%, -50%);
+ padding-bottom:2% ;
+
+}
+
 /*
 Correct the cursor style of increment and decrement buttons in Safari.
 */
@@ -326,6 +355,17 @@ input::placeholder,
 textarea::placeholder {
   opacity: 1; /* 1 */
   color: #9ca3af; /* 2 */
+}
+
+
+input:hover{
+  border: 2px solid #2a546b;
+}
+
+
+
+input:focus{
+  border: 2px solid #223b48 !important;
 }
 
 /*
