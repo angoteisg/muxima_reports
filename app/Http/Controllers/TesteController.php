@@ -10,9 +10,11 @@ class TesteController extends Controller
 
     public function index(){
         
-        $users = User::where('id', 1)->get()->first();
+        //$users = User::where('id', 1)->get()->first();
 
-        $empregados = \DB::connection('sqlsrv')->select("SELECT * FROM vw_empregados_posicao");
+        $empregados = \DB::connection('sqlsrv')->select("SELECT * FROM Artigo");
+
+        dd($empregados);
 
         echo "<pre>"; 
         print_r($empregados);

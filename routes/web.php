@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/analise', ['App\Http\Controllers\TesteController', 'index']);
+
 Route::get('/', function () {return redirect()->route('login');});
 
 /*Route::get('/inicio',function(){
@@ -28,4 +30,4 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/analise', ['App\Http\Controllers\TesteController', 'index']);
+
