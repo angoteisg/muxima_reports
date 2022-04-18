@@ -17,10 +17,17 @@
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
+        <style>
+
+
+        </style>
     </head>
     <body>
-        <div class="font-sans text-gray-900 antialiased" style="background-image: url({{asset('imagens/background-photo.jpg')}});">
-            {{ $slot }}
+         
+            <main>
+
+                @yield('content')
+            </main>
         </div>
     </body>
 </html>
