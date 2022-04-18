@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArtigoController;
-
+use App\Http\Controllers\VendasController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,7 +50,13 @@ Route::get('/vendasLista',function(){
     return view('vendas.vendasLista');
 })->name('vendas.vendasLista');
 
-
+//Reports Referentes a Artigos
 Route::get('/artigos/quantidade/',[ArtigoController::class,'qtdArtigos'])->name('artigos.quatidade');
 Route::get('/artigos/disponiveis/',[ArtigoController::class,'artigosDisponiveis'])->name('artigos.disponiveis');
 Route::get('/artigos/indisponiveis/',[ArtigoController::class,'artigosIndisponiveis'])->name('artigos.indisponiveis');
+
+//Reports Referentes a Vendas
+Route::get('/vendas/quantidade/',[VendasController::class,'qtdFacturas'])->name('vendas.quantidade');
+Route::get('/vendas/total/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'totalFacturas'])->name('vendas.total');
+Route::get('/vendas/clientes/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'topVendaCliente'])->name('vendas.clientes');
+Route::get('/vendas/artigos/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'topVendaArtigo'])->name('vendas.artigos');
