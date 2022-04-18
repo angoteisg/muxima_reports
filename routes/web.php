@@ -31,3 +31,20 @@ Route::middleware([
 });
 
 
+Route::get('/analise', ['App\Http\Controllers\TesteController', 'index']);
+
+Route::get('/comprasLista',function(){
+        return view('compras.comprasLista');
+})->name('compras.comprasLista');
+
+Route::get('/comprasGraficos',function(){
+    return view('compras.comprasGraficos');
+})->name('compras.comprasGraficos');
+
+Route::get('/vendasGraficos',function(){
+    return view('vendas.vendasGraficos');
+})->name('vendas.vendasGraficos');
+
+Route::get('/vendasLista',function(){
+    return view('vendas.vendasLista');
+})->name('vendas.vendasLista');
