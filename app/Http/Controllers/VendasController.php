@@ -39,6 +39,7 @@ class VendasController extends Controller
         }
     }
 
+
     /*Função topVendaCliente Retorna o top com o nome e o somatorio do valor de compras em Dinheiro dos clientes Emitidas no ERP Primavera
     Parametros ($moeda - Indica a Moeda Na qual queremos ver o Total;
     $data_inicio e $data_fim indicam respectivamente o inicio e o fim do intervalo em Datas)
@@ -53,13 +54,13 @@ class VendasController extends Controller
         try{
             $facturas = DB::connection('sqlsrv')->select("select NomeFac as nome, sum(TotalDocumento) as total 
             from CabecDoc 
-            where TipoDoc='FA'
+            where TipoDoc='GR'
             and Moeda='".$moeda."' 
             and DataGravacao >='".$data_inicio."' 
             and DataGravacao <'".$data_fim."'  
             group by NomeFac 
-            order by total desc;");
-            
+            order by total desc;"); 
+
             if(empty($facturas)){
                 return json_encode(array(['Cliente' => "Nenhum Cliente Encontrado",'total' => -1]));
             }
