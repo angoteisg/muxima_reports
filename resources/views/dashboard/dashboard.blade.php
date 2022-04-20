@@ -9,7 +9,7 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>150</h3>
+              <h3>{{ $totalVendas->quantidade }}</h3>
 
               <p>Vendas</p>
             </div>
@@ -24,9 +24,9 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
+              <h3>{{ $totalArtigos->quantidade }}<sup style="font-size: 20px"></sup></h3>
 
-              <p>Compras</p>
+              <p>Artigos</p>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>

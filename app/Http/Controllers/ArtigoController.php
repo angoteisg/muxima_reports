@@ -9,6 +9,23 @@ use Illuminate\Support\Facades\DB;
 
 class ArtigoController extends Controller
 {
+    public function artigosDisponiveisView(){
+            $artigos= json_decode( $this->artigosDisponiveis());
+
+            return view('artigos.artigosDisponiveisLista',compact('artigos'));
+    }
+
+    public function artigosIndisponiveisView(){
+        $artigos=json_decode( $this->artigosIndisponiveis());
+
+        return view('artigos.artigosIndisponiveisLista',compact('artigos'));
+}
+
+public function artigosGraficos(){
+    //$artigos=json_decode( $this->artigosIndisponiveis());
+
+    return view('artigos.artigosGraficos');
+}
 
     /*Função qtdArtigos() Retorna o total de artigos registados no ERP Primavera
     Criado: Ricardo Neves
@@ -18,9 +35,10 @@ class ArtigoController extends Controller
     public function qtdArtigos(){
         try{
             $artigos = DB::connection('sqlsrv')->select("select count(*) as quantidade from Artigo;");
-            return json_encode(array(["quantidade" => $artigos[0]->quantidade]));
+            
+            return json_encode(["quantidade" => $artigos[0]->quantidade]);
         }catch(Exception $e){
-            return json_encode(array(['mensagem' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]));
+            return json_encode(array(['mensagem' => "Conexão Não Estabelecida com a Base de Dados",'Erros'=>$e]));
         }
     }
 
