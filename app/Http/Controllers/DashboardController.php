@@ -16,6 +16,8 @@ class DashboardController extends Controller
 
         $totalVendas = json_decode($vendas->qtdFacturas());
         $totalArtigos= json_decode($artigos->qtdArtigos());
+
+ 
         
         return view('dashboard.dashboard',compact('totalVendas','totalArtigos'));
     }

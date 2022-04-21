@@ -8,7 +8,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Gráficos de 
+        Gráficos de Artigos Vendidos
         <small>Previsão Simples</small>
       </h1>
       <ol class="breadcrumb">
@@ -20,6 +20,24 @@
  
     <!-- Main content -->
     <section class="content">
+      <div class="form-group" style="margin-left:1%">
+        <br>
+        <select name="moeda" id="moeda" onchange="filtro()">
+          <option disabled">Moeda</option>
+          <option value="KZ">Kwanza</option>
+          <option value="EUR">Euro</option>
+          <option value="USD">Dolar</option>
+        </select>
+        <label for="data_inicio" > Inicio
+     <input type="date" value="2021-01-01" id="data_inicio"  onchange="filtro()">
+    </label>
+    
+    <label for="data_fim" >Fim
+      <input type="date" value="2022-01-01" id="data_fim" onchange="filtro()">
+     </label>
+
+     <input type="hidden" name="" id="funcao" value=2>
+    </div>
       <div class="row">
         <div class="col-md-6">
           <!-- AREA CHART -->

@@ -352,7 +352,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="{{ route('vendas.vendasGraficos') }}"><i class="fa fa-circle-o"></i> Gráficos</a></li>
+            <li ><a href="{{ route('artigos.artigosVendidosGraficos') }}"><i class="fa fa-circle-o"></i>Artigos Vendidos G</a></li>
+            <li ><a href="{{ route('artigos.clientesGraficos') }}"><i class="fa fa-circle-o"></i>Clientes G</a></li>
+            <li ><a href="{{ route('artigos.vendasGraficos') }}"><i class="fa fa-circle-o"></i>Vendas G</a></li>
+         {{-- <liclass="active"><ahref="route('vendas.vendasGraficos')}}"><i class="fa fa-circle-o"></i> Gráficos</a></li>--}}
             <li><a href="{{ route('vendas.vendasLista') }}"><i class="fa fa-circle-o"></i>Lista</a></li>
           </ul>
         </li>
@@ -379,11 +382,12 @@
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Artigos</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="   fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="{{ route('artigos.artigosGraficos') }}"><i class="fa fa-circle-o"></i> Gráficos</a></li>
+            <li ><a href="{{ route('artigos.artigosDisponiveisGraficos') }}"><i class="fa fa-circle-o"></i>Artigos Disponiveis G</a></li>
+            <li ><a href="{{ route('artigos.artigosIndisponiveisGraficos') }}"><i class="fa fa-circle-o"></i>Artigos Indisponiveis G</a></li>
             <li><a href="{{ route('artigos.artigosDisponiveisLista') }}"><i class="fa fa-circle-o"></i>Disponiveis L</a></li>
             <li><a href="{{ route('artigos.artigosIndisponiveisLista') }}"><i class="fa fa-circle-o"></i>Indisponiveis L</a></li>
           </ul>
