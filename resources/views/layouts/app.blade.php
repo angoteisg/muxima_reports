@@ -386,7 +386,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li ><a href="{{ route('artigos.artigosDisponiveisGraficos') }}"><i class="fa fa-circle-o"></i>Artigos Disponiveis G</a></li>
+            <li ><a href="{{ route('artigos.artigosDisponiveisGraficos') }}"><i class="fa fa-circle-o"></i>Artigos Disponiveis(MenorQtd) G</a></li>
             <li ><a href="{{ route('artigos.artigosIndisponiveisGraficos') }}"><i class="fa fa-circle-o"></i>Artigos Indisponiveis G</a></li>
             <li><a href="{{ route('artigos.artigosDisponiveisLista') }}"><i class="fa fa-circle-o"></i>Disponiveis L</a></li>
             <li><a href="{{ route('artigos.artigosIndisponiveisLista') }}"><i class="fa fa-circle-o"></i>Indisponiveis L</a></li>

@@ -22,6 +22,7 @@
     <section class="content">
       <div class="row">
         <div class="col-md-6">
+
           <!-- AREA CHART -->
           <div class="box box-primary">
             <div class="box-header with-border">
@@ -110,6 +111,7 @@
 
     </section>
     <!-- /.content -->
+    <input type="hidden" id="disponivel" value=4 >
   </div>
 
   @endsection

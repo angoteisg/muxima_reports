@@ -6,7 +6,13 @@
     @else
       var descricao = {!! $labels !!}
       var quantidade= {!! $data !!}
+      descricao = descricao.slice(0,5)
+     quantidade= quantidade.slice(0,5)
    @endempty
+   if($("#funcao").val()==4){
+     descricao = descricao.slice(0,-5)
+     quantidade= quantidade.slice(0,-5)
+   }
    var areaChartData = {
       labels  : descricao,
       datasets: [

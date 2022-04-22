@@ -79,11 +79,12 @@ public function artigosIndisponiveisGraficos(){
     */
     public function artigosDisponiveis(){
         try{
-            $artigos = DB::connection('sqlsrv')->select("select A.Descricao, INV.StkActual from Artigo A, V_INV_ArtigoArmazem INV where A.Artigo = INV.Artigo and INV.StkActual > 0 ;");
+            ///adicionei o order by
+            $artigos = DB::connection('sqlsrv')->select("select A.Descricao, INV.StkActual from Artigo A, V_INV_ArtigoArmazem INV where A.Artigo = INV.Artigo and INV.StkActual > 0 order by INV.StkActual asc ;");
             $resultado = array();
             $linha = array();
 
-            if(empty($artigos)){
+            if(empty($artigos)){ 
                 return json_encode(array(['descricao' => "Todos Artigos Não Estão Disponiveis No Stock",'stock' => -1]));
             }
 
