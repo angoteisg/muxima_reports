@@ -2,7 +2,7 @@
  
    @empty($labels) 
       var descricao = ["Não foram encontrados dados para serem exibidos"]
-      var quantidade= "[0]"
+      var quantidade= [0]
     @else
       var descricao = {!! $labels !!}
       var quantidade= {!! $data !!}
@@ -182,8 +182,12 @@
       barChart.Bar(barChartData, barChartOptions)
     }
 $(document).ready(function(){
+  var funcao = $("#funcao").val()
 
-  grafico();
+
+      grafico();
+  
+
 })
     function filtro(){
 
@@ -196,8 +200,8 @@ $(document).ready(function(){
         var caminho= "{{ route('vendas.clientesGraficos',["moeda","inicio","fim"]) }}";
       }else if(funcao==2){
         var caminho= "{{ route('vendas.artigoGraficos',["moeda","inicio","fim"]) }}";
-      }else{
-
+      }else if(funcao==3){
+        var caminho= "{{ route('vendas',["moeda","inicio","fim"]) }}";
       }
       
      // caminho = caminho.replace('funcao',funcao);
@@ -226,15 +230,21 @@ $(document).ready(function(){
                    success:function(data){
                     valor= JSON.parse(data)
                        console.log(valor)
-                      
-                       if(valor.labels.length==0){
-                        areaChartData.labels= ["nada"]
-                       areaChartData.datasets.data= [0]
-                     
-                       }else{
-                        areaChartData.labels= data.labels
-                       areaChartData.datasets.data= data.data
-                       }
+                      if(funcao!=3){
+
+                                if(valor.labels.length==0){
+                                areaChartData.labels= ["nada"]
+                              areaChartData.datasets.data= [0]
+                            
+                              }else{
+                                areaChartData.labels= data.labels
+                              areaChartData.datasets.data= data.data
+                              }
+                      }else{
+                        $('#totalVendas').empty()
+                          $('#totalVendas').append(valor.totalVendas.total)
+                      }
+                       
                       grafico();
                       console.log(areaChartData.labels)
                           

@@ -34,7 +34,7 @@ class VendasController extends Controller
     public function totalFacturas($moeda, $data_inicio, $data_fim){
         try{
             $facturas = DB::connection('sqlsrv')->select("select sum(TotalDocumento) as total from CabecDoc where TipoDoc = 'FA' and Moeda='".$moeda."' and DataGravacao >='".$data_inicio."' and DataGravacao <'".$data_fim."';");
-            return json_encode(array(["total" => $facturas[0]->total ?? 0]));
+            return json_encode(["total" => $facturas[0]->total ?? 0]);
         }catch(Exception $e){
             return json_encode(array(['mensagem' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]));
         }
@@ -89,16 +89,16 @@ class VendasController extends Controller
 /////////////////////TOTAL DE VENDA//////////////////////////////////
 
 public function vendasGrafico(){
-    $vendas= json_decode( $this->totalFacturas("KZ", "2021-01-01", "2022-01-01"));
-        return view('vendas.vendasGraficos',compact("vendas"));
+    $totalVendas= json_decode( $this->totalFacturas("KZ", "2021-01-01", "2022-01-01"));
+        return view('vendas.vendasGraficos',compact("totalVendas"));
 
 }
 public function vendasTotal($moeda, $data_inicio, $data_fim){
-
-    return $this->totalFacturas($moeda, $data_inicio, $data_fim);
+    $totalVendas= json_decode(  $this->totalFacturas($moeda, $data_inicio, $data_fim));
+    return json_encode(["totalVendas"=>$totalVendas]);
 
 }
-
+ 
 ////////////////////FIM GRAFICOS DE VENDA/////////////////////////////
 
     

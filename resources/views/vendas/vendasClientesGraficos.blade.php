@@ -18,7 +18,7 @@
       </ol>
     </section>
    
-      <div class="form-group" style="margin-left:1%">
+      <div class="form-group" style="margin-left:76%">
         <br>
         <select name="moeda" id="moeda" onchange="filtro()">
           <option disabled">Moeda</option>
