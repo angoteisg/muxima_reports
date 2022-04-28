@@ -9,6 +9,54 @@ use Illuminate\Support\Facades\DB;
 
 class ArtigoController extends Controller
 {
+    public function artigosDisponiveisView(){
+            $artigos= json_decode( $this->artigosDisponiveis());
+
+            return view('artigos.artigosDisponiveisLista',compact('artigos'));
+    }
+
+    public function artigosIndisponiveisView(){
+        $artigos=json_decode( $this->artigosIndisponiveis());
+
+        return view('artigos.artigosIndisponiveisLista',compact('artigos'));
+}
+
+public function artigosDisponiveisGraficos(){
+    //$artigos=json_decode( $this->artigosIndisponiveis());
+    $artigos= json_decode( $this->artigosDisponiveis());
+    $label= [];
+        $dt= [];
+    foreach($artigos as $artigos) {
+        array_push($label,substr($artigos->descricao,0,11));
+        array_push($dt,number_format($artigos->stock,0));
+    }
+    
+    $labels= json_encode($label);
+    $data=json_encode($dt);
+
+  //return $data;
+    return view('artigos.artigosDisponiveisGraficos',compact("labels","data"));
+}
+
+public function artigosIndisponiveisGraficos(){
+    //$artigos=json_decode( $this->artigosIndisponiveis());
+    $artigos= json_decode( $this->artigosIndisponiveis());
+    $label= [];
+        $dt= [];
+    foreach($artigos as $artigos) {
+        array_push($label,substr($artigos->descricao,0,11));
+        array_push($dt,number_format($artigos->stock,0));
+    }
+    
+    $labels= json_encode($label);
+    $data=json_encode($dt);
+
+  //return $data;
+    return view('artigos.artigosIndisponiveisGraficos',compact("labels","data"));
+}
+
+
+
 
     /*Função qtdArtigos() Retorna o total de artigos registados no ERP Primavera
     Criado: Ricardo Neves
@@ -18,7 +66,7 @@ class ArtigoController extends Controller
     public function qtdArtigos(){
         try{
             $artigos = DB::connection('sqlsrv')->select("select count(*) as quantidade from Artigo;");
-            return json_encode(array(["quantidade" => $artigos[0]->quantidade]));
+            return json_encode(["quantidade" => $artigos[0]->quantidade]);
         }catch(Exception $e){
             return json_encode(array(['mensagem' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]));
         }
@@ -35,7 +83,7 @@ class ArtigoController extends Controller
             $resultado = array();
             $linha = array();
 
-            if(empty($artigos)){
+            if(empty($artigos)){ 
                 return json_encode(array(['descricao' => "Todos Artigos Não Estão Disponiveis No Stock",'stock' => -1]));
             }
 
