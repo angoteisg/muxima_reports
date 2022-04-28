@@ -31,7 +31,7 @@ class ArtigoController extends Controller
     */
     public function artigosDisponiveis(){
         try{
-            $artigos = DB::connection('sqlsrv')->select("select A.Descricao, INV.StkActual from Artigo A, V_INV_ArtigoArmazem INV where A.Artigo = INV.Artigo and INV.StkActual > 0 ;");
+            $artigos = DB::connection('sqlsrv')->select("select A.Descricao, INV.StkActual from Artigo A, V_INV_ArtigoArmazem INV where A.Artigo = INV.Artigo and INV.StkActual > 0 order by INV.StkActual asc ;");
             $resultado = array();
             $linha = array();
 
