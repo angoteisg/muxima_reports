@@ -129,7 +129,7 @@ public function artigoGraficosView(){
     $valor= [];
     $labels= [];
     $data=[];
-    $busca= $this->artigoGraficosBusca("KZ", "2021-01-01", "2022-01-01",$artigo,$valor,$labels,$data);
+    $busca= $this->artigoGraficosBusca("AKZ", "2021-01-01", "2022-01-01",$artigo,$valor,$labels,$data);
         return view('vendas.artigosVendidosGraficos',compact("labels","data"));
 
 }
@@ -199,7 +199,7 @@ public function artigoGraficos($moeda, $data_inicio, $data_fim){
     
     Criado: Ricardo Neves
     Data Criação: 18/04/2022
-    Ultima Modificação: 18/04/2022
+    Ultima Modificação: 28/04/2022
     */ 
     public function topVendaArtigo($moeda, $data_inicio, $data_fim){
         try{
@@ -212,7 +212,57 @@ public function artigoGraficos($moeda, $data_inicio, $data_fim){
             and FA.DataGravacao >='".$data_inicio."' 
             and FA.DataGravacao <'".$data_fim."' 
             group by (A.Descricao) 
-            order by qtd desc;");
+            order by total desc;");
+            
+            if(empty($facturas)){
+                return json_encode(array(['artigo' => "Nenhum Artigo Vendido",'quantidade'=>-1,'total' => -1]));
+            }
+
+            $resultado = array();
+            $linha = array();
+
+            //Busca das Notas de Credito
+
+            $notas_credito = json_decode($this->topNotasCredito($moeda, $data_inicio, $data_fim));
+
+
+            foreach ($facturas as $factura) {
+                $linha['artigo'] = $factura->artigo;
+                $linha['quantidade'] = $factura->qtd;
+                $linha['total'] = $factura->total;
+                array_push($resultado,$linha);
+            }
+            return json_encode($this->ajusteVendasNotasCredito($resultado,$notas_credito));
+        
+        }catch(Exception $e){
+            return json_encode(array(['mensagem' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]));
+        }
+    }
+
+
+
+
+ /*Função topVendaArtigo Retorna os Artigos mais comprados com quantidades de compra e total em dinheiro das mesmas Emitidas no ERP Primavera
+    Parametros ($moeda - Indica a Moeda Na qual queremos ver o Total;
+    $data_inicio e $data_fim indicam respectivamente o inicio e o fim do intervalo em Datas)
+    Formato da data = 2022-04-18 - ano-mes-dia
+    
+    Criado: Ricardo Neves
+    Data Criação: 28/04/2022
+    Ultima Modificação: 28/04/2022
+    */ 
+    public function topNotasCredito($moeda, $data_inicio, $data_fim){
+        try{
+            $facturas = DB::connection('sqlsrv')->select("select A.Descricao as artigo, sum(LD.Quantidade) as qtd, sum((LD.PrecUnit * LD.Quantidade)) as total 
+            from LinhasDoc LD, Artigo A, CabecDoc FA 
+            where A.Artigo = LD.Artigo 
+            and FA.Id = LD.IdCabecDoc 
+            and FA.TipoDoc = 'NC'
+            and FA.Moeda='".$moeda."' 
+            and FA.DataGravacao >='".$data_inicio."' 
+            and FA.DataGravacao <'".$data_fim."' 
+            group by (A.Descricao) 
+            order by total desc;");
             
             if(empty($facturas)){
                 return json_encode(array(['artigo' => "Nenhum Artigo Vendido",'quantidade'=>-1,'total' => -1]));
@@ -232,6 +282,29 @@ public function artigoGraficos($moeda, $data_inicio, $data_fim){
         }catch(Exception $e){
             return json_encode(array(['mensagem' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]));
         }
+    }
+
+
+/*Função ajusteVendasNotasCredito debita as notas de credito ao valor total das facturas Emitidas no ERP Primavera
+    Parametros ($notas_credito - Indica as notas de credito);
+    $facturas indica as facturas
+    
+    Criado: Ricardo Neves
+    Data Criação: 28/04/2022
+    Ultima Modificação: 28/04/2022
+    */ 
+    public function ajusteVendasNotasCredito($facturas,$notas_credito){
+
+        for ($i=0; $i < count($facturas); $i++) { 
+            for ($j=0; $j < count($notas_credito); $j++) { 
+                if(strcmp($facturas[$i]["artigo"], $notas_credito[$j]->artigo) == 0){
+                    $facturas[$i]["total"]-=$notas_credito[$j]->total;
+                    $facturas[$i]["quantidade"] += ($notas_credito[$j]->quantidade);
+                    break;
+                }
+            }
+        }
+        return $facturas;
     }
 
 }
