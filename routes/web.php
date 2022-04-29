@@ -76,3 +76,6 @@ Route::get('/vendas/notascredito/{moeda}/{data_inicio}/{data_fim}',[VendasContro
 
 //retorno das moedas existentes
 Route::get('/moedas',[MoedaController::class,'isMoedas'])->name('moedas.existencias');
+
+//demanda 
+Route::get('/demanda/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'distribuicaoMensal'])->name('demanda.mes');
