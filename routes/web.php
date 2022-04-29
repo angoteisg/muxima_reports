@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArtigoController;
 use App\Http\Controllers\VendasController;
+use App\Http\Controllers\MoedaController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,3 +73,6 @@ Route::get('/vendas/total/{moeda}/{data_inicio}/{data_fim}',[VendasController::c
 Route::get('/vendas/clientes/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'topVendaCliente'])->name('vendas.clientes');
 Route::get('/vendas/artigos/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'topVendaArtigo'])->name('vendas.artigos');
 Route::get('/vendas/notascredito/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'topVendaArtigo'])->name('vendas.notas.credito');
+
+//retorno das moedas existentes
+Route::get('/moedas',[MoedaController::class,'isMoedas'])->name('moedas.existencias');
