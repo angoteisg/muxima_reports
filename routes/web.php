@@ -79,3 +79,4 @@ Route::get('/moedas',[MoedaController::class,'isMoedas'])->name('moedas.existenc
 
 //demanda 
 Route::get('/demanda/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'distribuicaoMensal'])->name('demanda.mes');
+Route::get('/demanda/{moeda}/{data_inicio}/{data_fim}/{cliente}',[VendasController::class,'distribuicaoMensalCliente'])->name('demanda.mes.cliente');
