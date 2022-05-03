@@ -307,4 +307,67 @@ public function artigoGraficos($moeda, $data_inicio, $data_fim){
         return $facturas;
     }
 
+    
+    public function totalPorData($documento, $moeda, $data_inicio, $data_fim,$cliente){
+        try{
+            $totais = DB::connection('sqlsrv')->select("select sum(PrecoLiquido) as total, Data as dt
+            from LinhasDoc 
+            where IdCabecDoc in 
+                (select Id from CabecDoc 
+                    where Moeda = '".$moeda."' 
+                        and TipoDoc = '".$documento."'
+                        ".(($cliente != NULL)? " and Nome like '%".$cliente."%' " : "")."
+                ) 
+                and Artigo <> 'NULL' 
+                and Data >= '".$data_inicio."'
+                and Data <= '".$data_fim."'
+                group by Data
+            ");
+             return $totais;
+
+        }catch(Exception $e){
+            return ['mensagem' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e];
+        }
+    }
+
+    public function demandaMeses($datas){
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('Africa/Luanda');
+
+        $qtd_mes = array (1 => 0 ,2 => 0,3 => 0,4 =>0 ,5 => 0,6 => 0 ,7 =>0,8 =>0,9 =>0,10 =>0,11 =>0,12 =>0);   //Array com os dias em PT com a quantidade em 0    
+        foreach ($datas as $data=>$value) {
+            
+            $mes = (int) strftime('%m', strtotime($value->dt)); //a função strtotime com base uma data busca os meses em PT porque mudamos o local com setlocale
+            $qtd_mes[$mes] += floatval($value->total); //então sempre que encontrar um dia soma na sua posisão apenas   
+        }
+        return $qtd_mes;
+    }
+
+    public function ajusteDemanda($faturas, $notas_credito){
+        for ($i=1; $i <= 12; $i++) { 
+            $faturas[$i] += $notas_credito[$i];
+        }
+        return $faturas;
+    }
+
+    public function distribuicaoMensal($moeda, $data_inicio, $data_fim){
+        $total_notas_credito = $this->totalPorData('NC', $moeda, $data_inicio, $data_fim, NULL);
+        $total_faturas = $this->totalPorData('FA', $moeda, $data_inicio, $data_fim, NULL);
+
+        $faturas = $this->demandaMeses($total_faturas); // demanda por mes de facturas
+        $notas_credito = $this->demandaMeses($total_notas_credito); // demanda por mes Notas de credito
+       
+        return json_encode($this->ajusteDemanda($faturas, $notas_credito));
+    }
+
+
+    public function distribuicaoMensalCliente($moeda, $data_inicio, $data_fim,$cliente){
+        $total_notas_credito = $this->totalPorData('NC', $moeda, $data_inicio, $data_fim,$cliente);
+        $total_faturas = $this->totalPorData('FA', $moeda, $data_inicio, $data_fim,$cliente);
+        
+        $faturas = $this->demandaMeses($total_faturas); // demanda por mes de facturas
+        $notas_credito = $this->demandaMeses($total_notas_credito); // demanda por mes Notas de credito
+       
+        return json_encode($this->ajusteDemanda($faturas, $notas_credito));
+    }
 }
