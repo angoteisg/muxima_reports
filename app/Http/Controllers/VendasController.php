@@ -41,46 +41,18 @@ class VendasController extends Controller
     }
 
 /////////////////////////////////GRAFICOS CLIENTES/////////////////////////////////
-    public function clientesGraficosBusca($moeda, $data_inicio, $data_fim,$cliente,$valor,$labels,$data){
-        $clientes=Null;
-        $clientes= json_decode( $this->topVendaCliente($moeda, $data_inicio, $data_fim));
-        $cliente= [];
-            $valor= [];
-           // $a= count($clientes->nome);
-           // return $a;
-          if(isset($clientes->nome)){
 
-          
-                        foreach($clientes as $clientes) {
-                            
-                                   array_push($cliente,substr($clientes->nome,0,11));
-                                   array_push($valor,number_format($clientes->valor,0));
-                        
-                        
-                 
-                }
-        
-            }
-      
-        $labels= $cliente;
-        $data=$valor;
-    }
     public function clientesGraficosView(){
-        $cliente= [];
-        $valor= [];
-        $labels= [];
-        $data=[];
-        $busca= $this->clientesGraficosBusca("KZ", "2021-01-01", "2022-01-01",$cliente,$valor,$labels,$data);
-            return view('vendas.vendasClientesGraficos',compact("labels","data"));
+    
+        $dados=  $this->topVendaCliente("AKZ", "2021-01-01", "2022-01-01");
+   
+            return view('vendas.vendasClientesGraficos',compact("dados"));
 
     }
     public function clientesGraficos($moeda, $data_inicio, $data_fim){
-        $cliente= [];
-        $valor= [];
-        $labels= [];
-        $data=[];
-        $this->clientesGraficosBusca($moeda, $data_inicio, $data_fim,$cliente,$valor,$labels,$data);
-            return json_encode(["labels"=>$labels,"data"=>$data]);
+    
+        $dados=  $this->topVendaCliente($moeda, $data_inicio, $data_fim);
+            return $dados;
 
     }
 //////////////////////FIM GRAFICOS CLIENTES///////////////////////////////
@@ -89,12 +61,14 @@ class VendasController extends Controller
 /////////////////////TOTAL DE VENDA//////////////////////////////////
 
 public function vendasGrafico(){
-    $totalVendas= json_decode( $this->totalFacturas("KZ", "2021-01-01", "2022-01-01"));
+    $totalVendas=json_decode( $this->totalFacturas("AKZ", "2021-01-01", "2022-01-01"));
+    $totalVendas->total= number_format($totalVendas->total,2);
         return view('vendas.vendasGraficos',compact("totalVendas"));
 
 }
 public function vendasTotal($moeda, $data_inicio, $data_fim){
     $totalVendas= json_decode(  $this->totalFacturas($moeda, $data_inicio, $data_fim));
+    $totalVendas->total= number_format($totalVendas->total,2);
     return json_encode(["totalVendas"=>$totalVendas]);
 
 }
@@ -103,43 +77,22 @@ public function vendasTotal($moeda, $data_inicio, $data_fim){
 
     
 /////////////////////////////////GRAFICOS ARTIGOS/////////////////////////////////
-public function artigoGraficosBusca($moeda, $data_inicio, $data_fim,$artigo,$valor,$labels,$data){
-   
-    $artigos= json_decode( $this->topVendaArtigo($moeda, $data_inicio, $data_fim));
-  
-       // $a= count($artigos->nome);
-       // return $a;
-      if(isset($artigos->nome)){
 
-      
-                    foreach($artigos as $artigos) {
-                        
-                               array_push($artigo,substr($artigos->nome,0,11));
-                               array_push($valor,number_format($artigos->valor,0));
-             
-            }
-    
-        }
-  
-    $labels = $artigo;
-    $data=$valor;
-}
 public function artigoGraficosView(){
-    $artigo= [];
-    $valor= [];
-    $labels= [];
-    $data=[];
-    $busca= $this->artigoGraficosBusca("KZ", "2021-01-01", "2022-01-01",$artigo,$valor,$labels,$data);
-        return view('vendas.artigosVendidosGraficos',compact("labels","data"));
+  
+
+    $dados=  $this->topVendaArtigo('AKZ', '2020-01-01', '2022-01-01');
+        return view('vendas.artigosVendidosGraficos',compact("dados"));
 
 }
+
+
 public function artigoGraficos($moeda, $data_inicio, $data_fim){
-    $artigo= [];
-    $valor= [];
-    $labels= [];
-    $data=[];
-    $this->artigoGraficosBusca($moeda, $data_inicio, $data_fim,$artigo,$valor,$labels,$data);
-        return json_encode(["labels"=>$labels,"data"=>$data]);
+   
+    $dados= $this->topVendaArtigo($moeda, $data_inicio, $data_fim);
+
+
+        return $dados;
 
 }
 //////////////////////FIM GRAFICOS ARTIGOS///////////////////////////////

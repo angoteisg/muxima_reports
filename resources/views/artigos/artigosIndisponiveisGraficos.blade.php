@@ -3,7 +3,7 @@
 
   
   <!-- right col -->
-
+  <input type="hidden" id="funcao" value=6>
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">

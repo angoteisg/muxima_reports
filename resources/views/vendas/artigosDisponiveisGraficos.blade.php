@@ -22,10 +22,9 @@
     <section class="content">
       <div class="row">
         <div class="col-md-6">
-          <!-- AREA CHART -->
-          <div class="box box-primary">
+          {{--<div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Gráficos de Área</h3>
+              <h3 class="box-title">Grafico de Area</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -34,13 +33,12 @@
               </div>
             </div>
             <div class="box-body">
-              <div class="chart">
+              <div class="chart" id="areaCharts">
                 <canvas id="areaChart" style="height:250px"></canvas>
               </div>
             </div>
             <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
+          </div>--}}
 
           <!-- DONUT CHART -->
           <div class="box box-danger">

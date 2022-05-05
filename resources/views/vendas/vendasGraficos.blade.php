@@ -3,7 +3,7 @@
 
   
   <!-- right col -->
-
+  <input type="hidden" name="" id="funcao" value=3>
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -18,33 +18,38 @@
       </ol>
     </section>
 
-      <div class="form-group" style="margin-left:76%">
+    <section class="content-header">
+ 
         <br>
+        <ol class="breadcrumb"> 
         <select name="moeda" id="moeda" onchange="filtro()">
           <option disabled">Moeda</option>
-          <option value="KZ">Kwanza</option>
+          <option selected value="AKZ">Kwanza</option>
           <option value="EUR">Euro</option>
           <option value="USD">Dolar</option>
         </select>
-        <label for="data_inicio" > Inicio
+        <label for="data_inicio" > Inicio   </label>
      <input type="date" value="2021-01-01" id="data_inicio"  onchange="filtro()">
-    </label>
+ 
     
-    <label for="data_fim" >Fim
+    <label for="data_fim" >Fim</label>
       <input type="date" value="2022-01-01" id="data_fim" onchange="filtro()">
-     </label>
+    </ol>
 
-     <input type="hidden" name="" id="funcao" value=3>
-    </div>
+  
+    </section>
+
+     
     <section class="content">
       <div class="row">
           <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-aqua">
-              <div class="inner"> 
-                <h3 id="totalVendas">{{ $totalVendas->total }}</h3>
+              <div class="inner" > 
+                <h3 id="totalVendas" >{{ $totalVendas->total }}</h3>
   
                 <p>Vendas</p>
+               
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
