@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArtigoController;
 use App\Http\Controllers\VendasController;
+use App\Http\Controllers\MoedaController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -70,3 +72,11 @@ Route::get('/vendas/quantidade/',[VendasController::class,'qtdFacturas'])->name(
 Route::get('/vendas/total/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'totalFacturas'])->name('vendas.total');
 Route::get('/vendas/clientes/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'topVendaCliente'])->name('vendas.clientes');
 Route::get('/vendas/artigos/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'topVendaArtigo'])->name('vendas.artigos');
+Route::get('/vendas/notascredito/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'topVendaArtigo'])->name('vendas.notas.credito');
+
+//retorno das moedas existentes
+Route::get('/moedas',[MoedaController::class,'isMoedas'])->name('moedas.existencias');
+
+//demanda 
+Route::get('/demanda/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'distribuicaoMensal'])->name('demanda.mes');
+Route::get('/demanda/{moeda}/{data_inicio}/{data_fim}/{cliente}',[VendasController::class,'distribuicaoMensalCliente'])->name('demanda.mes.cliente');
