@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="{{ asset('assets/dist/css/AdminLTE.min.css')}}">
   
   <!-- Morris chart -->
-  <link rel="stylesheet" href="{{ asset('assets/bower_components/morris.js/morris.css')}}">
+  {{-- <linkrel="stylesheet"href="asset('assets/bower_components/morris.js/morris.css')}}">---}}
   <!-- jvectormap -->
   <link rel="stylesheet" href="{{ asset('assets/bower_components/jvectormap/jquery-jvectormap.css')}}">
   <!-- Date Picker -->
@@ -308,9 +308,9 @@
           </li>
           <!-- Control Sidebar Toggle Button -->
           @if(Auth::user()->name=='admin')
-          <li>
+          {{--<li>
             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
+          </li>--}}
           @endif
         </ul>
       </div>
@@ -638,8 +638,8 @@
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset('assets/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- Morris.js charts -->
-<script src="{{ asset('assets/bower_components/raphael/raphael.min.js')}}"></script>
-<script src="{{ asset('assets/bower_components/morris.js/morris.min.js')}}"></script>
+{{-- <scriptsrc="asset('assets/bower_components/raphael/raphael.min.js') "></script>
+<script src="{{ asset('assets/bower_components/morris.js/morris.min.js')}}"></script>--}}
 <!-- Sparkline -->
 <script src="{{ asset('assets/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js')}}"></script>
 <!-- jvectormap -->
@@ -669,6 +669,8 @@
 <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <!-- ChartJS -->
 <script src="{{ asset('assets/bower_components/chart.js/Chart.js')}}"></script>
+<script src="{{ asset('assets/bower_components/chart.js/Chart.min.js')}}"></script>
+
 @include('layouts.listaJs')
 @include('layouts.graficoJs')
 
