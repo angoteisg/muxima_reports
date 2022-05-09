@@ -68,11 +68,11 @@ Route::get('/artigos/disponiveis/',[ArtigoController::class,'artigosDisponiveis'
 Route::get('/artigos/indisponiveis/',[ArtigoController::class,'artigosIndisponiveis'])->name('artigos.indisponiveis');
 
 //Reports Referentes a Vendas
-Route::get('/vendas/quantidade/',[VendasController::class,'qtdFacturas'])->name('vendas.quantidade');
-Route::get('/vendas/total/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'totalFacturas'])->name('vendas.total');
+Route::get('/vendas/quantidade/facturas/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'qtdFacturas'])->name('vendas.quantidade.facturas');
+Route::get('/vendas/quantidade/notascredito/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'qtdNotasCredito'])->name('vendas.quantidade.notascredito');
+Route::get('/vendas/total/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'totalVendas'])->name('vendas.total');
 Route::get('/vendas/clientes/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'topVendaCliente'])->name('vendas.clientes');
 Route::get('/vendas/artigos/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'topVendaArtigo'])->name('vendas.artigos');
-Route::get('/vendas/notascredito/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'topVendaArtigo'])->name('vendas.notas.credito');
 
 //retorno das moedas existentes
 Route::get('/moedas',[MoedaController::class,'isMoedas'])->name('moedas.existencias');
