@@ -9,35 +9,17 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Gráficos de Artigos Vendidos
-        <small>Previsão Simples</small>
+        Artigos mais Vendidos
+        <small>Top 5</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Charts</a></li>
-        <li class="active">ChartJS</li>
+        <li><a href="/dashboard"><i class="fa fa-dashboard"></i>  Página Inicial</a></li>
+        <li><a href="#">Vendas</a></li>
+        <li class="active"> <a href="{{ route('artigos.artigosVendidosGraficos') }}"> Artigos mais Vendidos <small class="label pull-right" style="color: green;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Top 5</font></font></small> </a></li>
+ 
       </ol>
     </section>
-    <section class="content-header">
- 
-      <br>
-      <ol class="breadcrumb"> 
-      <select name="moeda" id="moeda" onchange="filtro()">
-        <option disabled">Moeda</option>
-        <option selected value="AKZ">Kwanza</option>
-        <option value="EUR">Euro</option>
-        <option value="USD">Dolar</option>
-      </select>
-      <label for="data_inicio" > Inicio   </label>
-   <input type="date" value="2021-01-01" id="data_inicio"  onchange="filtro()">
-
-  
-  <label for="data_fim" >Fim</label>
-    <input type="date" value="2022-01-01" id="data_fim" onchange="filtro()">
-  </ol>
-
-
-  </section>
+    
     <!-- Main content -->
     <section class="content">
      
@@ -63,7 +45,7 @@
           <!-- DONUT CHART -->
           <div class="box box-danger">
             <div class="box-header with-border">
-              <h3 class="box-title">Gráfico de Donut</h3>
+              <h3 class="box-title">Gráfico de Pizza</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -81,7 +63,7 @@
         </div>
         <!-- /.col (LEFT) -->
         <div class="col-md-6">
-          <!-- LINE CHART -->
+         {{-- <!-- LINE CHART -->
           <div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title">Gráfico de Linha</h3>
@@ -99,7 +81,7 @@
             </div>
             <!-- /.box-body -->
           </div>
-          <!-- /.box -->
+          <!-- /.box -->--}}
 
           <!-- BAR CHART -->
           <div class="box box-success">
@@ -118,7 +100,33 @@
               </div>
             </div>
             <!-- /.box-body -->
+
+
           </div>
+
+              
+    <div class=" box box-default "  >
+      <div class="box-header with-border"   >
+         
+           <br>
+           <ol  style="float: right" width="auto"> 
+             <span class="label  bg-green"> <b> Filtros</b>       </span>  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+           <select name="moeda" id="moeda" onchange="filtro()">
+             <option disabled">Moeda</option>
+             <option selected value="AKZ">Kwanza</option>
+             <option value="EUR">Euro</option>
+             <option value="USD">Dolar</option>
+           </select>
+           <label for="data_inicio" > Inicio   </label>
+        <input type="date" value="2021-01-01" id="data_inicio"  onchange="filtro()">
+     
+       
+       <label for="data_fim" >Fim</label>
+         <input type="date" value="2022-01-01" id="data_fim" onchange="filtro()">
+       </ol>
+     </div>
+     
+     </div>
           <!-- /.box -->
 
         </div>

@@ -3,6 +3,17 @@
 
 @section('content')
 <div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      Página Inicial
+      
+     
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Página Inicial</a></li>
+     
+    </ol>
+  </section>
 <section class="content">
     <div class="row">
         <div class="col-lg-3 col-xs-6">

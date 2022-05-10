@@ -8,47 +8,31 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Indicadores de Vendas, Totais
-        <small>Previsão Simples</small>
+        Indicadores de Vendas
+        <small>Geral</small>
+       
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Charts</a></li>
-        <li class="active">ChartJS</li>
+        <li><a href="/dashboard"><i class="fa fa-dashboard"></i>  Página Inicial</a></li>
+        <li><a href="#">Vendas</a></li>
+        <li class="active"> <a href="{{ route('artigos.vendasGraficos') }}"> Vendas <small class="label pull-right" style="color:magenta;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Geral</font></font></small> </a></li>
+ 
       </ol>
     </section>
 
-    <section class="content-header">
- 
-        <br>
-        <ol class="breadcrumb"> 
-        <select name="moeda" id="moeda" onchange="filtro()">
-          <option disabled">Moeda</option>
-          <option selected value="AKZ">Kwanza</option>
-          <option value="EUR">Euro</option>
-          <option value="USD">Dolar</option>
-        </select>
-        <label for="data_inicio" > Inicio   </label>
-     <input type="date" value="2021-01-01" id="data_inicio"  onchange="filtro()">
- 
-    
-    <label for="data_fim" >Fim</label>
-      <input type="date" value="2022-01-01" id="data_fim" onchange="filtro()">
-    </ol>
-
   
-    </section>
 
      
     <section class="content">
       <div class="row">
-          <div class="col-lg-3 col-xs-6">
+          <div class="col-lg-3 col-xs-6" >
             <!-- small box -->
-            <div class="small-box bg-aqua">
-              <div class="inner" > 
-                <h3 id="totalVendas" >{{ $totalVendas->total }}</h3>
-  
-                <p>Vendas</p>
+            <div class="small-box bg-aqua fontes" >
+              <div class="inner"> 
+              
+                  <h3 style="width:100%" id="totalVendas">{{ $totalVendas->total }}</h3>
+    
+                  <p>Vendas</p>
                
               </div>
               <div class="icon">
@@ -58,11 +42,11 @@
             </div>
           </div>
           <!-- ./col -->
-          <div class="col-lg-3 col-xs-6">
+          <div class="col-lg-3 col-xs-6 fontes">
             <!-- small box -->
-            <div class="small-box bg-green">
+            <div class="small-box bg-green ">
               <div class="inner">
-                <h3>0<sup style="font-size: 20px"></sup></h3>
+                <h3>{{ $totalVendas->total }}</h3>
   
                 <p>Outro</p>
               </div>
@@ -77,7 +61,7 @@
             <!-- small box -->
             <div class="small-box bg-yellow">
               <div class="inner">
-                <h3>44</h3>
+                <h3>{{ $totalVendas->total }}</h3>
   
                 <p>Outro</p>
               </div>
@@ -105,8 +89,36 @@
           <!-- ./col -->
         </div>
   <section>
-
-    <h1 style="color: red"><center><p>OUTROS GRÁFICOS DE OUTROS INDICADORES</p></center></h1>
+        
+    <div class=" box box-default " style="width:49%; float: right;"  >
+      <div class="box-header with-border"   >
+         
+           <br>
+           <ol  style="float: right"> 
+             <span class="label  bg-green"> <b> Filtros</b>       </span>  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+           <select name="moeda" id="moeda" onchange="filtro()">
+             <option disabled">Moeda</option>
+             <option selected value="AKZ">Kwanza</option>
+             <option value="EUR">Euro</option>
+             <option value="USD">Dolar</option>
+           </select>
+           <label for="data_inicio" > Inicio   </label>
+        <input type="date" value="2021-01-01" id="data_inicio"  onchange="filtro()">
+     
+       
+       <label for="data_fim" >Fim</label>
+         <input type="date" value="2022-01-01" id="data_fim" onchange="filtro()">
+       </ol>
+     </div>
+     
+     </div>
+     <br>
+     <br>
+     <br>
+     <br>
+     <br>
+     <p>  <h1 style="color: red"><center><p>OUTROS GRÁFICOS DE OUTROS INDICADORES</p></center></h1>
+  </p>
     {{--<!-- Main content -->
     <section class="content">
       <div class="row">

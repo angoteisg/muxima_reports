@@ -8,37 +8,18 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Gráficos de Clientes 
-        <small>Previsão Simples</small>
+        Maiores Clientes 
+        <small>Top 5</small>
+       
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Charts</a></li>
-        <li class="active">ChartJS</li>
+        <li><a href="/dashboard"><i class="fa fa-dashboard"></i>  Página Inicial</a></li>
+        <li><a href="#">Vendas</a></li>
+        <li class="active"> <a href="{{ route('artigos.clientesGraficos') }}"> Maiores Clientes <small class="label pull-right" style="color: green;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Top 5</font></font></small> </a></li>
+ 
       </ol>
     </section>
    
-    <section class="content-header">
- 
-      <br>
-      <ol class="breadcrumb"> 
-      <select name="moeda" id="moeda" onchange="filtro()">
-        <option disabled">Moeda</option>
-        <option selected value="AKZ">Kwanza</option>
-        <option value="EUR">Euro</option>
-        <option value="USD">Dolar</option>
-      </select>
-      <label for="data_inicio" > Inicio   </label>
-   <input type="date" value="2021-01-01" id="data_inicio"  onchange="filtro()">
-
-  
-  <label for="data_fim" >Fim</label>
-    <input type="date" value="2022-01-01" id="data_fim" onchange="filtro()">
-  </ol>
-
-
-  </section>
- 
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -68,7 +49,7 @@
           <!-- DONUT CHART -->
           <div class="box box-danger">
             <div class="box-header with-border">
-              <h3 class="box-title">Gráfico Donut</h3>
+              <h3 class="box-title">Gráfico Pizza</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -87,7 +68,7 @@
         <!-- /.col (LEFT) -->
         <div class="col-md-6">
           <!-- LINE CHART -->
-          <div class="box box-info">
+          {{--<div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title">Gráfico de Linha</h3>
 
@@ -103,13 +84,13 @@
               </div>
             </div>
             <!-- /.box-body -->
-          </div>
+          </div>--}}
           <!-- /.box -->
 
           <!-- BAR CHART -->
           <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Gráfico de Linha</h3>
+              <h3 class="box-title">Gráfico de Barras</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -119,11 +100,35 @@
             </div>
             <div class="box-body">
               <div class="chart" id="barCharts">
-                <canvas id="barChart" style="height:230px"></canvas>
+                <canvas id="barChart" style="height:300px;width:500px"></canvas>
               </div>
             </div>
             <!-- /.box-body -->
           </div>
+          
+    <div class=" box box-default "  >
+ <div class="box-header with-border"   >
+    
+      <br>
+      <ul  style="float: right"> 
+        <span class="label  bg-green"> <b> Filtros</b>       </span>  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      <select name="moeda" id="moeda" onchange="filtro()">
+        <option disabled">Moeda</option>
+        <option selected value="AKZ">Kwanza</option>
+        <option value="EUR">Euro</option>
+        <option value="USD">Dolar</option>
+      </select>
+      <label for="data_inicio" > Inicio   </label>
+   <input type="date" value="2021-01-01" id="data_inicio"  onchange="filtro()" >
+
+  
+  <label for="data_fim" >Fim</label>
+    <input type="date" value="2022-01-01" id="data_fim" onchange="filtro()" >
+  </ul>
+</div>
+
+</div>
+ 
           <!-- /.box -->
 
         </div>

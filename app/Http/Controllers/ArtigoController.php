@@ -64,7 +64,7 @@ public function artigosIndisponiveisGraficos(){
     public function artigosDisponiveis(){
         try{
             ///adicionei o order by
-            $artigos = DB::connection('sqlsrv')->select("select A.Descricao, INV.StkActual from Artigo A, V_INV_ArtigoArmazem INV where A.Artigo = INV.Artigo and INV.StkActual > 0 order by INV.StkActual asc ;");
+            $artigos = DB::connection('sqlsrv')->select("select A.Descricao, INV.StkActual from Artigo A, V_INV_ArtigoArmazem INV where A.Artigo = INV.Artigo and INV.StkActual > 0 order by INV.StkActual desc ;");
             $resultado = array();
             $linha = array();
 

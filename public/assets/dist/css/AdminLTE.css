@@ -1460,9 +1460,11 @@ a:focus {
   display: block;
   margin-bottom: 20px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  font-size: 100% !important;
 }
 .small-box > .inner {
   padding: 10px;
+  
 }
 .small-box > .small-box-footer {
   position: relative;

@@ -12,9 +12,11 @@
         <small>Vendas</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tables</a></li>
-        <li class="active">Data tables</li>
+       
+        <li><a href="/dashboard"><i class="fa fa-dashboard"></i>  Página Inicial</a></li>
+        <li><a href="#">Vendas</a></li>
+        <li class="active"> <a href="{{ route('vendas.vendasLista') }}"> Lista <small class="label pull-right" style="color: green;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lista</font></font></small> </a></li>
+ 
       </ol>
     </section>
 
@@ -27,7 +29,7 @@
 
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Data Table With Full Features</h3>
+          
           </div>
           <!-- /.box-header -->
           <div class="box-body">
