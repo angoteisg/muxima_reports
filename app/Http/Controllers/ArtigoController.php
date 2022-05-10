@@ -45,11 +45,11 @@ public function artigosIndisponiveisGraficos(){
     /*Função qtdArtigos() Retorna o total de artigos registados no ERP Primavera
     Criado: Ricardo Neves
     Data Criação: 18/04/2022
-    Ultima Modificação: 18/04/2022
+    Ultima Modificação: 28/04/2022
     */
     public function qtdArtigos(){
         try{
-            $artigos = DB::connection('sqlsrv')->select("select count(*) as quantidade from Artigo;");
+            $artigos = DB::connection('sqlsrv')->select("select count(*) as quantidade from Artigo A, V_INV_ValoresActuaisStockArm INV where INV.Stock>0 and A.Artigo=INV.Artigo;");
             return json_encode(["quantidade" => $artigos[0]->quantidade]);
         }catch(Exception $e){
             return json_encode(array(['mensagem' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]));
@@ -63,8 +63,7 @@ public function artigosIndisponiveisGraficos(){
     */
     public function artigosDisponiveis(){
         try{
-            ///adicionei o order by
-            $artigos = DB::connection('sqlsrv')->select("select A.Descricao, INV.StkActual from Artigo A, V_INV_ArtigoArmazem INV where A.Artigo = INV.Artigo and INV.StkActual > 0 order by INV.StkActual desc ;");
+            $artigos = DB::connection('sqlsrv')->select("select A.Descricao, INV.StkActual from Artigo A, V_INV_ArtigoArmazem INV where A.Artigo = INV.Artigo and INV.StkActual > 0 order by INV.StkActual DESC ;");
             $resultado = array();
             $linha = array();
 
