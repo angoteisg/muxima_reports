@@ -10,13 +10,15 @@ $n=0;
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Lista de Artigos Disponiveis
-        <small>Artigos</small>
+        Artigos Indisponiveis
+        <small>Lista</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tables</a></li>
-        <li class="active">Data tables</li>
+        <li><a href="/dashboard"><i class="fa fa-dashboard"></i>  Página Inicial</a></li>
+  
+        <li><a href="#">Artigos</a></li>
+        <li class="active"> <a href="{{ route('artigos.artigosIndisponiveisLista') }}"> Artigos Indisponiveis <small class="label pull-right" style="color: orange;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lista</font></font></small> </a></li>
+ 
       </ol>
     </section>
 
@@ -29,7 +31,7 @@ $n=0;
 
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Data Table With Full Features</h3>
+           
           </div>
           <!-- /.box-header -->
           <div class="box-body">

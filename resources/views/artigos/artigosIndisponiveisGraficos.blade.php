@@ -8,12 +8,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Gráficos de Artigos Indisponiveis
-        <small>Previsão Simples</small>
+        Artigos Indisponiveis
+        <small>Top 5</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Gráficos</a></li>
+        <li><a href="/dashboard"><i class="fa fa-dashboard"></i>  Página Inicial</a></li>
+        <li><a href="#">Artigos</a></li>
+        <li class="active"> <a href="{{ route('artigos.artigosIndisponiveisGraficos') }}"> Artigos Indisponiveis <small class="label pull-right" style="color: green;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Top 5</font></font></small> </a></li>
  
       </ol>
     </section>
