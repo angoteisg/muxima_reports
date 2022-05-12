@@ -52,6 +52,14 @@ Route::get('/vendasLista',function(){
 Route::get('/vendasGraficos',[VendasController::class,'vendasGrafico'])->name('artigos.vendasGraficos');
 Route::get('/clientesGraficos',[VendasController::class,'clientesGraficosView'])->name('artigos.clientesGraficos');
 Route::get('/artigosVendidosGraficos',[VendasController::class,'artigoGraficosView'])->name('artigos.artigosVendidosGraficos');
+
+
+////Listas
+Route::get('/clientesListas',[VendasController::class,'clientesListasView'])->name('artigos.clientesListas');
+Route::get('/clientesListasFiltro/{moeda?}/{data_inicio?}/{data_fim?}',[VendasController::class,'clientesListasFiltro'])->name('artigos.clientesListasFiltro');
+Route::get('/artigosVendidosListas',[VendasController::class,'artigoListasView'])->name('artigos.artigosVendidosListas');
+Route::get('/artigosVendidosImprimir/{moeda?}/{data_inicio?}/{data_fim?}',[VendasController::class,'artigoListasImprimir'])->name('artigos.artigosVendidosListasImprimir');
+
 ///funções que retornam JSON
 Route::get('/vendas/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'vendasTotal'])->name('vendas');
 Route::get('/vendas/clientesGraficos/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'clientesGraficos'])->name('vendas.clientesGraficos');

@@ -27,6 +27,8 @@
      
       <div class="box-body">
        Neste gráfico apresentamos o top 5 dos artigos disponiveis.
+
+       <a href="" class="btn btn-primary" style="float: right">Imprimir</a> 
        <br>
        <br>
       </div>

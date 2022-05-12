@@ -1,23 +1,23 @@
 @extends('layouts.app')
 @section('content')
-
 @php
-$n=0;
+  $n= 0;
 @endphp
+  
   <!-- right col -->
 
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Artigos Indisponiveis
-        <small>Lista</small>
+        Lista de Clientes 
+        <small>Vendas</small>
       </h1>
       <ol class="breadcrumb">
+       
         <li><a href="/dashboard"><i class="fa fa-dashboard"></i>  Página Inicial</a></li>
-  
-        <li><a href="#">Artigos</a></li>
-        <li class="active"> <a href="{{ route('artigos.artigosIndisponiveisLista') }}"> Artigos Indisponiveis <small class="label pull-right" style="color: orange;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lista</font></font></small> </a></li>
+        <li><a href="#">Vendas</a></li>
+        <li class="active"> <a href="{{ route('vendas.vendasLista') }}"> Lista de Clientes <small class="label pull-right" style="color: green;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lista</font></font></small> </a></li>
  
       </ol>
     </section>
@@ -31,7 +31,7 @@ $n=0;
 
         <div class="box">
           <div class="box-header">
-            <a href="" class="btn btn-primary" style="float: right">Imprimir</a> 
+          <a href="" class="btn btn-primary" style="float: right">Imprimir</a>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -39,21 +39,25 @@ $n=0;
               <thead>
               <tr>
                 <th>#</th>
-                <th>Descrição</th>
-                <th>Stock</th>
-           
+                <th>Nome</th>
+                <th>Total em Compras</th>
+              
               </tr>
               </thead>
               <tbody>
-                @foreach($artigos as $artigo)
+                @foreach($dado as $dado)
               <tr>
+               
+                  
+             
                 <td>{{ $n=$n+1 }}</td>
-                <td>{{ $artigo->descricao }}</td>
-                <td>{{ number_format($artigo->stock,0) }} </td>
+                <td>{{ $dado->cliente }} </td>
+                <td>{{ number_format($dado->total,2) }}</td>
+           
               </tr>
               @endforeach
               </tbody>
-            
+             
             </table>
           </div>
           <!-- /.box-body -->

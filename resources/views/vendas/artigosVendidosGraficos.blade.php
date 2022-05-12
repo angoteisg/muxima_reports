@@ -122,7 +122,9 @@
      
        
        <label for="data_fim" >Fim</label>
-         <input type="date" value="2022-01-01" id="data_fim" onchange="filtro()">
+         <input type="date" value="2022-01-01" id="data_fim" onchange="filtro()">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+         <a href="{{ route('artigos.artigosVendidosListasImprimir',['AKZ','2021-01-01','2022-01-01']) }}" class="btn btn-primary btn-sm" id="gerarPDF" >Gerar PDF</a>
+ 
        </ol>
      </div>
      
