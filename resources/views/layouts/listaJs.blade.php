@@ -24,7 +24,8 @@
         "oAria": {
             "sSortAscending":  ": Activar para ordenar a coluna de maneira ascendente",
             "sSortDescending": ": Activar para ordenar a coluna de maneira descendente"
-        }
+        },
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     } 
       })
       $('#example2').DataTable({

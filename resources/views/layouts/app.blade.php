@@ -370,6 +370,11 @@
           <ul class="treeview-menu">
             <li ><a href="{{ route('artigos.artigosVendidosGraficos') }}"><i class="fa fa-circle-o"></i>Artigos mais Vendidos<small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Top 5</font></font></small> </a></li>
             <li ><a href="{{ route('artigos.clientesGraficos') }}"><i class="fa fa-circle-o"></i>Maiores Clientes <small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Top 5</font></font></small> </a></li>
+            
+            <li ><a href=" {{ route('artigos.artigosVendidosListas')  }}"><i class="fa fa-circle-o"></i>Artigos Vendidos<small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lista</font></font></small> </a></li>
+           <li ><a href="{{ route('artigos.clientesListas') }}"><i class="fa fa-circle-o"></i>Clientes <small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Lista</font></font></small> </a></li>
+            
+            
             <li ><a href="{{ route('artigos.vendasGraficos') }}"><i class="fa fa-circle-o"></i>Indicadores de Venda <small class="label pull-right bg-maroon"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Geral</font></font></small> </a></li>
          {{-- <liclass="active"><ahref="route('vendas.vendasGraficos')}}"><i class="fa fa-circle-o"></i> Gráficos</a></li>--}}
             <li><a href="{{ route('vendas.vendasLista') }}"><i class="fa fa-circle-o"></i>Lista</a></li>

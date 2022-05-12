@@ -111,6 +111,7 @@
     
       <br>
       <ul  style="float: right"> 
+      
         <span class="label  bg-green"> <b> Filtros</b>       </span>  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
       <select name="moeda" id="moeda" onchange="filtro()">
         <option disabled">Moeda</option>
@@ -123,7 +124,9 @@
 
   
   <label for="data_fim" >Fim</label>
-    <input type="date" value="2022-01-01" id="data_fim" onchange="filtro()" >
+    <input type="date" value="2022-01-01" id="data_fim" onchange="filtro()" >&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+
+    <a href="{{ route('artigos.clientesListasFiltro',['AKZ','2021-01-01','2022-01-01']) }}" class="btn btn-primary btn-sm" id="gerarPDF" >Gerar PDF</a>
   </ul>
 </div>
 

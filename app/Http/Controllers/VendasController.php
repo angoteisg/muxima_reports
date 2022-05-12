@@ -44,10 +44,24 @@ class VendasController extends Controller
 
     public function clientesGraficosView(){
     
-        $dados=  $this->topVendaCliente("AKZ", "2021-01-01", "2022-01-01");
+        $dados=  $this->topVendaCliente("AKZ", "2021-01-01", now()->format('Y-m-d'));
    
             return view('vendas.vendasClientesGraficos',compact("dados"));
 
+    }
+
+    public function clientesListasView(){
+    
+        $dado= json_decode( $this->topVendaCliente("AKZ", "2010-01-01", now()->format('Y-m-d')));
+   //return $dados;
+            return view('vendas.vendasClientesLista',compact("dado"));
+
+    }
+
+    public function clientesListasFiltro($moeda, $data_inicio, $data_fim){
+    
+        $dados= $this->clientesGraficos($moeda,$data_inicio,$data_fim);
+        return $dados;
     }
     public function clientesGraficos($moeda, $data_inicio, $data_fim){
     
@@ -80,8 +94,28 @@ public function vendasTotal($moeda, $data_inicio, $data_fim){
 
 public function artigoGraficosView(){  
 
-    $dados=  $this->topVendaArtigo('AKZ', '2020-01-01', '2022-01-01');
+    $dados=  $this->topVendaArtigo('AKZ', '2010-01-01', now()->format('Y-m-d'));
         return view('vendas.artigosVendidosGraficos',compact("dados"));
+
+}
+
+public function artigoListasView(){  
+
+    $dado=  json_decode($this->topVendaArtigo('AKZ', '2020-01-01', now()->format('Y-m-d')));
+        return view('vendas.artigosVendidosLista',compact("dado"));
+
+}
+
+
+public function artigoListasImprimir($moeda=null, $data_inicio=null, $data_fim=null){  
+
+    if($moeda){
+            $dado=  json_decode($this->topVendaArtigo($moeda, $data_inicio, $data_fim));
+    }else{
+        $dado=  json_decode($this->topVendaArtigo('AKZ', '2000-01-01', now()->format('Y-m-d')));
+    }
+
+        return view('impressao.artigosVendidos',compact("dado"));
 
 }
 

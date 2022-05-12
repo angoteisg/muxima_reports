@@ -143,14 +143,14 @@ const config = {
     }
   }
 };
-
+/*
 
 if(typeof $("#lineChart") !='unefined'){
 
  lineChartCanvas          = document.getElementById('lineChart').getContext('2d')
 lineChart                = new Chart(lineChartCanvas,config)
 }
-
+*/
 
 
 
@@ -227,11 +227,12 @@ var quantidade
 
 })
     function filtro(){
-
+      var gerarPDF = $("#gerarPDF").val()
       var inicio = $("#data_inicio").val()
       var fim = $("#data_fim").val()
       var moeda = $("#moeda").val()
       var funcao = $("#funcao").val()
+    
 //console.log(inicio+"/"+fim+"/"+moeda)
       if(funcao==1){
         var caminho= "{{ route('vendas.clientesGraficos',["moeda","inicio","fim"]) }}";
@@ -240,6 +241,9 @@ var quantidade
       }else if(funcao==3){
         var caminho= "{{ route('vendas',["moeda","inicio","fim"]) }}";
       }
+       var href = "{{ route('artigos.clientesListasFiltro',["moeda","inicio","fim"]) }}"
+      
+
       console.log(fim)
       console.log(inicio)
       console.log(moeda)
@@ -247,6 +251,13 @@ var quantidade
       caminho = caminho.replace('moeda',moeda);
       caminho = caminho.replace('inicio',inicio);
       caminho = caminho.replace('fim',fim);
+
+      href = href.replace('moeda',moeda);
+      href = href.replace('inicio',inicio);
+      href = href.replace('fim',fim);
+      $("#gerarPDF").attr("href",href)
+ 
+
       $.ajaxSetup({
                    headers: {
                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
