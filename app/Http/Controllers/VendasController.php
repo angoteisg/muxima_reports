@@ -47,7 +47,7 @@ class VendasController extends Controller
 
             $total_faturas = $facturas->totalFacturas($moeda, $data_inicio, $data_fim);
             $total_notas_credito = $notas_credito->totalNotasCredito($moeda, $data_inicio, $data_fim);
-            
+             
             return response()->json(["total" => ($total_faturas + $total_notas_credito ?? 0)]);
         }catch(Exception $e){
             return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
@@ -318,5 +318,31 @@ public function distribuicaoMensalClienteGrafico($moeda, $data_inicio, $data_fim
         }catch (Exception $e){
             return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
         }
+    }
+
+    public function totalFacturas($moeda, $data_inicio, $data_fim){
+        try{
+            $facturas = new FacturaController;
+            $total_faturas = $facturas->totalFacturas($moeda, $data_inicio, $data_fim);
+            return response()->json(["total"=>$total_faturas]);
+        }catch (Exception $e){
+            return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
+        }
+        
+        $notas_credito = new NotasCreditoController;
+
+        $total_notas_credito = $notas_credito->totalNotasCredito($moeda, $data_inicio, $data_fim);
+    }
+
+    public function totalNotasCredito($moeda, $data_inicio, $data_fim){
+        try{
+            $notas_credito = new NotasCreditoController;
+            $total_notas_credito = $notas_credito->totalNotasCredito($moeda, $data_inicio, $data_fim);
+            return response()->json(["total"=>$total_notas_credito]);
+        }catch (Exception $e){
+            return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
+        }
+        
+
     }
 }
