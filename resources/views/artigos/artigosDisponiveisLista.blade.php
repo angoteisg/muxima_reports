@@ -30,7 +30,7 @@
 
         <div class="box">
           <div class="box-header">
-          
+            <a href="" class="btn btn-primary" style="float: right">Imprimir</a> 
           </div>
           <!-- /.box-header -->
           <div class="box-body">

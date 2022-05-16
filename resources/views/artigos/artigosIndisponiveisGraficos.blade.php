@@ -18,30 +18,25 @@
  
       </ol>
     </section>
- 
+ <br>
     <!-- Main content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-md-6">
-          <!-- AREA CHART -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Gráficos de Área</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
+    <div class="col-md-12">
+      <div class="box box-success">
+           
             <div class="box-body">
-              <div class="chart">
-                <canvas id="areaChart" style="height:250px"></canvas>
-              </div>
+             Neste gráfico apresentamos o top 5 dos artigos disponiveis.
+      
+             <a href="" class="btn btn-primary" style="float: right">Imprimir</a> 
+             <br>
+             <br>
             </div>
             <!-- /.box-body -->
           </div>
-          <!-- /.box -->
+        </div>
+    <section class="content">
+      <div class="row">
+        <div class="col-md-6">
+        
 
           <!-- DONUT CHART -->
           <div class="box box-danger">
@@ -64,25 +59,7 @@
         </div>
         <!-- /.col (LEFT) -->
         <div class="col-md-6">
-          <!-- LINE CHART -->
-          <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Gráfico de Linha</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <div class="box-body">
-              <div class="chart">
-                <canvas id="lineChart" style="height:250px"></canvas>
-              </div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
+         
 
           <!-- BAR CHART -->
           <div class="box box-success">
