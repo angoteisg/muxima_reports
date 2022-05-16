@@ -23,36 +23,20 @@ class ArtigoController extends Controller
 
 public function artigosDisponiveisGraficos(){
     //$artigos=json_decode( $this->artigosIndisponiveis());
-    $artigos= json_decode( $this->artigosDisponiveis());
-    $label= [];
-        $dt= [];
-    foreach($artigos as $artigos) {
-        array_push($label,substr($artigos->descricao,0,11));
-        array_push($dt,number_format($artigos->stock,0));
-    }
-    
-    $labels= json_encode($label);
-    $data=json_encode($dt);
+    $dados= $this->artigosDisponiveis();
+   
 
   //return $data;
-    return view('artigos.artigosDisponiveisGraficos',compact("labels","data"));
+    return view('artigos.artigosDisponiveisGraficos',compact("dados"));
 }
 
 public function artigosIndisponiveisGraficos(){
     //$artigos=json_decode( $this->artigosIndisponiveis());
-    $artigos= json_decode( $this->artigosIndisponiveis());
-    $label= [];
-        $dt= [];
-    foreach($artigos as $artigos) {
-        array_push($label,substr($artigos->descricao,0,11));
-        array_push($dt,number_format($artigos->stock,0));
-    }
+    $dados=  $this->artigosIndisponiveis();
     
-    $labels= json_encode($label);
-    $data=json_encode($dt);
 
   //return $data;
-    return view('artigos.artigosIndisponiveisGraficos',compact("labels","data"));
+    return view('artigos.artigosIndisponiveisGraficos',compact("dados"));
 }
 
 
@@ -124,4 +108,7 @@ public function artigosIndisponiveisGraficos(){
             return json_encode(array(['mensagem' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]));
         }
     }
+
+
+    
 }
