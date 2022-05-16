@@ -28,7 +28,7 @@ class VendasController extends Controller
     */
     public function qtdFacturas($moeda, $data_inicio, $data_fim){
         $FacturaController = new FacturaController;
-        return $FacturaController->qtdFactura($moeda, $data_inicio, $data_fim);
+        return $FacturaController->qtdFacturas($moeda, $data_inicio, $data_fim);
     }
 
     /*Função totalVendas Retorna o total em Dinheiro das vendas Emitidas no ERP Primavera
@@ -47,7 +47,7 @@ class VendasController extends Controller
 
             $total_faturas = $facturas->totalFacturas($moeda, $data_inicio, $data_fim);
             $total_notas_credito = $notas_credito->totalNotasCredito($moeda, $data_inicio, $data_fim);
-            
+             
             return response()->json(["total" => ($total_faturas + $total_notas_credito ?? 0)]);
         }catch(Exception $e){
             return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
@@ -246,5 +246,31 @@ public function artigoGraficos($moeda, $data_inicio, $data_fim){
         }catch (Exception $e){
             return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
         }
+    }
+
+    public function totalFacturas($moeda, $data_inicio, $data_fim){
+        try{
+            $facturas = new FacturaController;
+            $total_faturas = $facturas->totalFacturas($moeda, $data_inicio, $data_fim);
+            return response()->json(["total"=>$total_faturas]);
+        }catch (Exception $e){
+            return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
+        }
+        
+        $notas_credito = new NotasCreditoController;
+
+        $total_notas_credito = $notas_credito->totalNotasCredito($moeda, $data_inicio, $data_fim);
+    }
+
+    public function totalNotasCredito($moeda, $data_inicio, $data_fim){
+        try{
+            $notas_credito = new NotasCreditoController;
+            $total_notas_credito = $notas_credito->totalNotasCredito($moeda, $data_inicio, $data_fim);
+            return response()->json(["total"=>$total_notas_credito]);
+        }catch (Exception $e){
+            return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
+        }
+        
+
     }
 }
