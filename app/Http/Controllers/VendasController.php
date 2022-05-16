@@ -28,7 +28,7 @@ class VendasController extends Controller
     */
     public function qtdFacturas($moeda, $data_inicio, $data_fim){
         $FacturaController = new FacturaController;
-        return $FacturaController->qtdFactura($moeda, $data_inicio, $data_fim);
+        return $FacturaController->qtdFacturas($moeda, $data_inicio, $data_fim);
     }
 
     /*Função totalVendas Retorna o total em Dinheiro das vendas Emitidas no ERP Primavera
@@ -58,7 +58,7 @@ class VendasController extends Controller
 
     public function clientesGraficosView(){
     
-        $dados=  $this->topVendaCliente("AKZ", "2021-01-01", now()->format('Y-m-d'));
+        $dados= $this->topVendaCliente("AKZ", "2021-01-01", now()->format('Y-m-d'))->getContent();
    
             return view('vendas.vendasClientesGraficos',compact("dados"));
 
@@ -66,20 +66,25 @@ class VendasController extends Controller
 
     public function clientesListasView(){
     
-        $dado= json_decode( $this->topVendaCliente("AKZ", "2010-01-01", now()->format('Y-m-d')));
-   //return $dados;
+        $dado= json_decode( $this->topVendaCliente("AKZ", "2010-01-01", now()->format('Y-m-d'))->getContent());
+      
+
             return view('vendas.vendasClientesLista',compact("dado"));
 
     }
+
+
 
     public function clientesListasFiltro($moeda, $data_inicio, $data_fim){
     
         $dados= $this->clientesGraficos($moeda,$data_inicio,$data_fim);
         return $dados;
     }
+
+
     public function clientesGraficos($moeda, $data_inicio, $data_fim){
     
-        $dados=  $this->topVendaCliente($moeda, $data_inicio, $data_fim);
+        $dados=  $this->topVendaCliente($moeda, $data_inicio, $data_fim)->getContent();
             return $dados;
 
     }
@@ -88,16 +93,19 @@ class VendasController extends Controller
 
 /////////////////////TOTAL DE VENDA//////////////////////////////////
 
-public function vendasGrafico(){
-    $totalVendas=json_decode( $this->totalVendas("AKZ", "2021-01-01", "2022-01-01"));
+public function vendasIndicadores(){
+    $totalVendas=json_decode( $this->totalVendas("AKZ", "2010-01-01", "2022-01-01")->getContent());
     $totalVendas->total= number_format($totalVendas->total,2);
-        return view('vendas.vendasGraficos',compact("totalVendas"));
+    $totalNotasCredito = json_decode($this->qtdNotasCredito("AKZ", "2010-01-01", "2022-01-01")->getContent());
+    
+        return view('vendas.vendasIndicadores',compact("totalVendas","totalNotasCredito"));
 
 }
 public function vendasTotal($moeda, $data_inicio, $data_fim){
-    $totalVendas= json_decode(  $this->totalVendas($moeda, $data_inicio, $data_fim));
+    $totalVendas= json_decode(  $this->totalVendas($moeda, $data_inicio, $data_fim)->getContent());
     $totalVendas->total= number_format($totalVendas->total,2);
-    return json_encode(["totalVendas"=>$totalVendas]);
+    $totalNotasCredito = json_decode($this->qtdNotasCredito($moeda, $data_inicio, $data_fim)->getContent());
+    return json_encode(["totalVendas"=>$totalVendas,"totalNotasCredito"=>$totalNotasCredito]);
 
 }
  
@@ -108,14 +116,18 @@ public function vendasTotal($moeda, $data_inicio, $data_fim){
 
 public function artigoGraficosView(){  
 
-    $dados=  $this->topVendaArtigo('AKZ', '2010-01-01', now()->format('Y-m-d'));
+    $dado= $this->topVendaArtigo('AKZ', '2010-01-01', now()->format('Y-m-d'));
+     $dados=  $dado->getContent();
+   
+
         return view('vendas.artigosVendidosGraficos',compact("dados"));
 
 }
 
 public function artigoListasView(){  
 
-    $dado=  json_decode($this->topVendaArtigo('AKZ', '2020-01-01', now()->format('Y-m-d')));
+    $dado= json_decode($this->topVendaArtigo('AKZ', '2020-01-01', now()->format('Y-m-d'))->getContent());
+
         return view('vendas.artigosVendidosLista',compact("dado"));
 
 }
@@ -124,9 +136,9 @@ public function artigoListasView(){
 public function artigoListasImprimir($moeda=null, $data_inicio=null, $data_fim=null){  
 
     if($moeda){
-            $dado=  json_decode($this->topVendaArtigo($moeda, $data_inicio, $data_fim));
+            $dado=  json_decode($this->topVendaArtigo($moeda, $data_inicio, $data_fim)->getContent());
     }else{
-        $dado=  json_decode($this->topVendaArtigo('AKZ', '2000-01-01', now()->format('Y-m-d')));
+        $dado=  json_decode($this->topVendaArtigo('AKZ', '2000-01-01', now()->format('Y-m-d'))->getContent());
     }
 
         return view('impressao.artigosVendidos',compact("dado"));
@@ -136,12 +148,37 @@ public function artigoListasImprimir($moeda=null, $data_inicio=null, $data_fim=n
 
 public function artigoGraficos($moeda, $data_inicio, $data_fim){
    
-    $dados= $this->topVendaArtigo($moeda, $data_inicio, $data_fim);
+    $dados= $this->topVendaArtigo($moeda, $data_inicio, $data_fim)->getContent();
 
 
         return $dados;
 
 }
+
+
+
+////////////////////////////////////////DISTRIBUÇÃO MENSAL///////////////////////////
+
+public function distribuicaoMensalView(){
+        $dados = $this->distribuicaoMensal('AKZ', '2000-01-01', now()->format('Y-m-d'))->getContent();
+      //  return $dados;
+        return view('vendas.distribuicaoMensal',compact("dados"));
+}
+
+public function distribuicaoMensalGrafico($moeda, $data_inicio, $data_fim){
+    $dados = $this->distribuicaoMensal($moeda, $data_inicio, $data_fim)->getContent();
+
+    return $dados;
+}
+
+public function distribuicaoMensalClienteGrafico($moeda, $data_inicio, $data_fim,$cliente){
+    $dados = $this->distribuicaoMensalCliente($moeda, $data_inicio, $data_fim,$cliente)->getContent();
+
+    return $dados;
+}
+
+
+/////////////////////////////////////// FIM  DISTRIBUICAO MENSAL//////////////////////////
 //////////////////////FIM GRAFICOS ARTIGOS///////////////////////////////
 
 
@@ -277,6 +314,7 @@ public function artigoGraficos($moeda, $data_inicio, $data_fim){
             $notas_credito = $this->demandaMeses($total_notas_credito); // demanda por mes Notas de credito
            
             return response()->json($this->ajusteDemanda($faturas, $notas_credito));
+
         }catch (Exception $e){
             return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
         }

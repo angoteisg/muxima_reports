@@ -2,19 +2,20 @@
 @section('content')
 
 @php
-  $artigos= json_decode($dados);
+  $meses= json_decode($dados);
   $n=0;
+  $mes= [1=>"Janeiro",2=>"Fevereiro",3=>"Março",4=>"Abril",5=>"Maio",6=>"Junho",7=>"Julho",8=>"Agosto",9=>"Setembro",10=>"Outubro",11=>"Novembro",12=>"Dezembro"];
 @endphp
   
   <!-- right col -->
-  <input type="hidden" name="" id="funcao" value=2>
+  <input type="hidden" name="" id="funcao" value=6>
 
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Artigos mais Vendidos
-        <small>Top 5</small>
+        Distribuição Mensal
+        <small>Vendas</small>
       </h1>
       <ol class="breadcrumb">
         <a href="{{ route('artigos.artigosVendidosListasImprimir',['AKZ','2021-01-01','2022-01-01']) }}" class="btn btn-primary btn-sm" id="gerarPDF" ><i class="fa fa-fw fa-print"></i></a>
@@ -22,7 +23,7 @@
         <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default"> <i class="fa fa-fw fa-filter"></i>      </a>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
         <li><a href="/dashboard"><i class="fa fa-dashboard"></i>  Página Inicial</a></li>
         <li><a href="#">Vendas</a></li>
-        <li class="active"> <a href="{{ route('artigos.artigosVendidosGraficos') }}"> Artigos mais Vendidos <small class="label pull-right" style="color: green;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Top 5</font></font></small> </a></li>
+        <li class="active"> <a href="{{ route('artigos.artigosVendidosGraficos') }}"> Distribuição Mensal <small class="label pull-right" style="color: green;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Meses</font></font></small> </a></li>
  
       </ol>
     </section>
@@ -72,22 +73,24 @@
                 <thead>
                 <tr>
                   <th>#</th>
-                  <th>Nome</th>
-                  <th>Quantidade</th>
+                  <th>Meses</th>
+           
                   <th>Total</th>
                 
                 </tr>
                 </thead>
-                <tbody>
-                  @foreach($artigos as $dado)
+                <tbody id="corpo">
+                  @foreach($meses as $meses)
+                    
+           
                 <tr>
                  
                     
                
                   <td>{{ $n=$n+1 }}</td>
-                  <td>{{ $dado->artigo }} </td>
-                  <th>{{ $dado->qtd }}</th>
-                  <td>{{ number_format($dado->total,2) }}</td>
+                  <td>{{ $mes[$n] }}</td>
+                  <td>{{ number_format($meses,2)}} </td>
+                 
              
                 </tr>
                 @endforeach
@@ -200,11 +203,29 @@
                     <option value="USD">Dolar</option>
                   </select>
                   <label for="data_inicio">Inicio:</label>
-              <input type="date" class="form-control" value="2021-01-01" id="data_inicio"  >
+              <input type="date" class="form-control"  id="data_inicio"  >
             
               
               <label for="data_fim">Fim:</label>
-                <input type="date" class="form-control" value="2022-01-01" id="data_fim" >
+                <input type="date" class="form-control"  id="data_fim" >
+
+                <label for="ano">Ano:</label>
+                <select name="ano" class="form-control" id="ano">
+                  <option value="2010">2010</option>
+                  <option value="2011">2011</option>
+                  <option value="2012">2012</option>
+                  <option value="2013">2013</option>
+                  <option value="2014">2014</option>
+                  <option value="2015">2015</option>
+                  <option value="2016">2016</option>
+                  <option value="2017">2017</option>
+                  <option value="2018">2018</option>
+                  <option value="2019">2019</option>
+                  <option value="2020">2020</option>
+                  <option value="2022">2022</option>
+
+                </select>
+               
               </ol>
         </div>
         <div class="modal-footer">

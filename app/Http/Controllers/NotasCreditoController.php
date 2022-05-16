@@ -35,3 +35,4 @@ class NotasCreditoController extends DocumentoVendaController
         return parent::totalPorData($moeda, $data_inicio, $data_fim,$cliente);
     }
 }
+ 

@@ -1,6 +1,7 @@
 <script>
     $(function () {
       $('#example1').DataTable({
+        "lengthMenu":[[5,10,20,-1],[5,10,20,'Todos']],
         "language": {
         "sProcessing":    "Procesando...",
         "sLengthMenu":    "Mostrar _MENU_ registos",
@@ -39,6 +40,7 @@
       })
 
       $('#example2').DataTable({
+        "lengthMenu":[[5,10,20,-1],[5,10,20,'Todos']],
         "language": {
         "sProcessing":    "Procesando...",
         "sLengthMenu":    "Mostrar _MENU_ registos",

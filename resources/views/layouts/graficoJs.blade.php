@@ -5,6 +5,7 @@ var barChart
 var pieChart 
 var areaChart
 var lineChartCanvas  
+var mes= ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
 
 
 function cortarNome(nome){
@@ -81,9 +82,13 @@ const ctx = document.getElementById('barChart').getContext('2d');
             backgroundColor: cor,
             borderColor: cor,
             borderWidth: 1
+         
         }]
     },
     options: {
+      aspectRatio:1,
+            maintainAspectRatio:false,
+            weight:3,
         scales: {
             y: {
                 beginAtZero: true
@@ -93,6 +98,7 @@ const ctx = document.getElementById('barChart').getContext('2d');
 
     if(typeof $('#pieChart').val() !='undefined'){
       var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+   
             pieChart       = new Chart(pieChartCanvas,pie)
 }
      
@@ -167,12 +173,17 @@ lineChart                = new Chart(lineChartCanvas,config)
 $(document).ready(function(){ 
   
   @isset($dados)
- var dados= {!! $dados !!}
 
+ var dado=  {!! $dados !!}
+
+ var dados=dado
+ console.log(dado)
  var desc =[]
  var num = []
 var descricao
 var quantidade
+
+  
 
 
  for(let i=0; i<dados.length;i++){
@@ -197,10 +208,15 @@ var quantidade
    }
 
    if($("#funcao").val()==2){
-    console.log(dados[i].artigo)
+  
     desc.push(cortarNome(dados[i].artigo))
-    num.push(dados[i].quantidade)
+    num.push(dados[i].qtd)
    }
+
+   if($("#funcao").val()==6){
+     
+     num.push(dados[i])
+    }
    
  }
 
@@ -212,8 +228,14 @@ var quantidade
  
       descricao = desc.slice(0,5)
      quantidade= num.slice(0,5)
-   
 
+///alimentado a istribução mensal
+     if($("#funcao").val()==6){
+     
+     descricao=mes
+     quantidade=Object.values(dados)
+
+    }
      
    @endempty
    @endisset
@@ -232,6 +254,7 @@ var quantidade
       var fim = $("#data_fim").val()
       var moeda = $("#moeda").val()
       var funcao = $("#funcao").val()
+      var ano
     
 //console.log(inicio+"/"+fim+"/"+moeda)
       if(funcao==1){
@@ -240,6 +263,16 @@ var quantidade
         var caminho= "{{ route('vendas.artigoGraficos',["moeda","inicio","fim"]) }}";
       }else if(funcao==3){
         var caminho= "{{ route('vendas',["moeda","inicio","fim"]) }}";
+      }else if(funcao==6){
+        var caminho= "{{ route('vendas.distribuicaoMensalGrafico',["moeda","inicio","fim"]) }}";
+
+        if(!inicio){
+            ano= $("#ano").val()
+          inicio = ano+'-01-01'
+          fim= ano+'-12-31'
+        }
+       
+
       }
        var href = "{{ route('artigos.clientesListasFiltro',["moeda","inicio","fim"]) }}"
       
@@ -280,6 +313,8 @@ var quantidade
                    success:function(data){
                     var valor= JSON.parse(data)
                      //  console.log(valor)
+                    var descri
+                    var quant
                     var desc=[]
                     var total=[]
                     var num = []
@@ -314,13 +349,33 @@ var quantidade
                               if(funcao==2){
                               
                                 desc.push(cortarNome(valor[i].artigo))
-                                num.push(valor[i].quantidade)
+                                num.push(valor[i].qtd)
                               }
+                             
+                          
                               
                       }
-                    
-                     
-                           
+                              
+                     /*
+                      if(funcao==6){
+                        $("tbody").html(' ')
+
+
+                                for(let i=1; i<=valor.length;i++){
+                                
+                                    
+                                    $("table > tbody").append(
+                                      `    <tr>
+                                          <td>`+i+`</td>
+                                          <td>`+mes[i]+`</td>
+                                            <td>`+valor[i]+`</td>
+                                        </tr>
+
+                                                        
+                                    `)
+                                }
+                                   
+                              }*/
 
 
                    /*   if(funcao!=3){
@@ -336,6 +391,8 @@ var quantidade
 
                         $('#totalVendas').empty()
                           $('#totalVendas').append(valor.totalVendas.total)
+                        $('#totalNotasCredito').empty()
+                        $('#totalNotasCredito').append(valor.totalNotasCredito.quantidade)
 
                       }else{
                         if(lineChart){
@@ -356,7 +413,19 @@ var quantidade
                        $("#pieCharts").html(`<canvas id="pieChart" style="height:250px" ></canvas>`) 
                        }
                       
-                      grafico(desc.slice(0,5),num.slice(0,5));
+                       descri= desc.slice(0,5)
+                       quant=num.slice(0,5)
+
+                       if(funcao==6){
+              
+                        descri=mes
+                        quant=Object.values(valor)
+
+                      
+                    
+                        }
+                       
+                      grafico(descri,quant);
 
                       }
                     
@@ -373,6 +442,124 @@ var quantidade
 
         }
 
+        function distribuicao(cliente){
+
+
+   
+      var inicio = $("#data_inicio").val()
+      var fim = $("#data_fim").val()
+      var moeda = $("#moeda").val()
+      var funcao = $("#funcao").val()
+      var ano
+    
+//console.log(inicio+"/"+fim+"/"+moeda)
+      
+        var caminho= "{{ route('vendas.distribuicaoMensalClienteGrafico',["moeda","inicio","fim","cliente"]) }}";
+
+        if(!inicio){
+            ano= $("#ano").val()
+          inicio = ano+'-01-01'
+          fim= ano+'-12-31'
+        }
+       
+
+      
+      
+      
+
+      console.log(fim)
+      console.log(inicio)
+      console.log(moeda)
+     // caminho = caminho.replace('funcao',funcao);
+      caminho = caminho.replace('moeda',moeda);
+      caminho = caminho.replace('inicio',inicio);
+      caminho = caminho.replace('fim',fim);
+      caminho = caminho.replace('cliente',cliente);
+
+   
+ 
+
+      $.ajaxSetup({
+                   headers: {
+                       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                   }
+               });
+                     $.ajax({
+                         
+                   method:"GET",
+                   enctype: 'multipart/form-data',
+                   url: caminho,
+                   data:{
+                     
+                   moeda:moeda, 
+                   data_inicio:inicio, 
+                   data_fim:fim, 
+                   cliente:cliente
+                   },
+                   headers:{
+                   'Accept':'application/json',
+                   'Content-Type':'application/json'
+                   },
+                   success:function(data){
+                    var valor= JSON.parse(data)
+                     //  console.log(valor)
+                    var descri
+                    var quant
+                    var desc=[]
+                    var total=[]
+                    var num = []
+                    var funcao = $("#funcao").val()
+                      if(Object.keys(data).length==0){
+                        areaChartData.labels= ["Não Foi encontrado nenhum dado para este periodo"]
+                        areaChartData.datasets.data= [0]
+                      }
+
+                      console.log(valor)                               
+                        if(lineChart){
+                                  lineChart.destroy()
+                      $("#lineChart").remove()
+                       $("#lineCharts").html(`<canvas id="lineChart" style="height:250px" ></canvas>`)
+                        }
+               
+                      // lineChart.render()
+                      if(barChart){
+                        barChart.destroy() 
+                       $("#barChart").remove()
+                       $("#barCharts").html(`<canvas id="barChart" style="height:250px" ></canvas>`)
+                      }
+                       if(pieChart){
+                          pieChart.destroy()
+                       $("#pieChart").remove()
+                       $("#pieCharts").html(`<canvas id="pieChart" style="height:250px" ></canvas>`) 
+                       }
+                      
+                       
+              
+                        descri=mes
+                        quant=Object.values(valor)
+
+                      
+                    
+                        
+                       
+                      grafico(descri,quant);
+
+                      
+                    
+                      
+                      
+                    //  console.log(areaChartData.labels)
+                          
+       
+                   }
+      
+  
+         })
+
+
+      
+
+        }
 
 
 

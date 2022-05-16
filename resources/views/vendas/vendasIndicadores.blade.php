@@ -13,9 +13,12 @@
        
       </h1>
       <ol class="breadcrumb">
+        <a href="{{ route('artigos.artigosVendidosListasImprimir',['AKZ','2021-01-01','2022-01-01']) }}" class="btn btn-primary btn-sm" id="gerarPDF" ><i class="fa fa-fw fa-print"></i></a>
+        <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default"> <i class="fa fa-fw fa-filter"></i>      </a>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+     
         <li><a href="/dashboard"><i class="fa fa-dashboard"></i>  Página Inicial</a></li>
         <li><a href="#">Vendas</a></li>
-        <li class="active"> <a href="{{ route('artigos.vendasGraficos') }}"> Vendas <small class="label pull-right" style="color:magenta;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Geral</font></font></small> </a></li>
+        <li class="active"> <a href="{{ route('artigos.vendasIndicadores') }}"> Vendas <small class="label pull-right" style="color:magenta;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Geral</font></font></small> </a></li>
  
       </ol>
     </section>
@@ -46,14 +49,14 @@
             <!-- small box -->
             <div class="small-box bg-green ">
               <div class="inner">
-                <h3>{{ $totalVendas->total }}</h3>
+                <h3  id="totalNotasCredito">{{ $totalNotasCredito->quantidade }}</h3>
   
-                <p>Outro</p>
+                <p>Notas de Crédito (qtd)</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="#" class="small-box-footer">Ver mais <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="#" class="small-box-footer">Ver mais... <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -90,7 +93,7 @@
         </div>
   <section>
         
-    <div class=" box box-default " style="width:49%; float: right;"  >
+    {{--<div class=" box box-default " style="width:49%; float: right;"  >
       <div class="box-header with-border"   >
          
            <br>
@@ -111,7 +114,7 @@
        </ol>
      </div>
      
-     </div>
+     </div>--}}
      <br>
      <br>
      <br>
@@ -211,6 +214,45 @@
 
     </section>
     <!-- /.content -->--}}
+
+
+
+
+
+    <div class="modal fade" id="modal-default">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Filtro</h4>
+          </div>
+          <div class="modal-body">
+                    <ol class="form-inline"  style="margin:0 auto" width="auto"> 
+                  <label for="moeda">Moeda:</label>
+                    <select class="form-control" name="moeda" id="moeda" >
+                    
+                      <option selected value="AKZ">Kwanza</option>
+                      <option value="EUR">Euro</option>
+                      <option value="USD">Dolar</option>
+                    </select>
+                    <label for="data_inicio">Inicio:</label>
+                <input type="date" class="form-control" value="2021-01-01" id="data_inicio"  >
+              
+                
+                <label for="data_fim">Fim:</label>
+                  <input type="date" class="form-control" value="2022-01-01" id="data_fim" >
+                </ol>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="filtro()">Submeter</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
   </div>
 
   @endsection

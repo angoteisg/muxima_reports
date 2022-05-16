@@ -49,7 +49,7 @@ Route::get('/vendasLista',function(){
     return view('vendas.vendasLista');
 })->name('vendas.vendasLista');
 
-Route::get('/vendasGraficos',[VendasController::class,'vendasGrafico'])->name('artigos.vendasGraficos');
+Route::get('/vendasIndicadores',[VendasController::class,'vendasIndicadores'])->name('artigos.vendasIndicadores');
 Route::get('/clientesGraficos',[VendasController::class,'clientesGraficosView'])->name('artigos.clientesGraficos');
 Route::get('/artigosVendidosGraficos',[VendasController::class,'artigoGraficosView'])->name('artigos.artigosVendidosGraficos');
 
@@ -64,6 +64,12 @@ Route::get('/artigosVendidosImprimir/{moeda?}/{data_inicio?}/{data_fim?}',[Venda
 Route::get('/vendas/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'vendasTotal'])->name('vendas');
 Route::get('/vendas/clientesGraficos/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'clientesGraficos'])->name('vendas.clientesGraficos');
 Route::get('/vendas/artigosVendidosGraficos/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'artigoGraficos'])->name('vendas.artigoGraficos');
+Route::get('/vendas/distribuicaoMensalGrafico/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'distribuicaoMensalGrafico'])->name('vendas.distribuicaoMensalGrafico');
+Route::get('/vendas/distribuicaoMensal',[VendasController::class,'distribuicaoMensalView'])->name('vendas.distribuicaoMensal');
+Route::get('/vendas/distribuicaoMensalClienteGrafico/{moeda}/{data_inicio}/{data_fim}/{cliente}',[VendasController::class,'distribuicaoMensalClienteGrafico'])->name('vendas.distribuicaoMensalClienteGrafico');
+
+
+
 
 Route::get('/artigosDisponiveisGraficos',[ArtigoController::class,'artigosDisponiveisGraficos'])->name('artigos.artigosDisponiveisGraficos');
 Route::get('/artigosIndisponiveisGraficos',[ArtigoController::class,'artigosIndisponiveisGraficos'])->name('artigos.artigosIndisponiveisGraficos');
@@ -81,6 +87,10 @@ Route::get('/vendas/quantidade/notascredito/{moeda}/{data_inicio}/{data_fim}',[V
 Route::get('/vendas/total/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'totalVendas'])->name('vendas.total');
 Route::get('/vendas/clientes/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'topVendaCliente'])->name('vendas.clientes');
 Route::get('/vendas/artigos/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'topVendaArtigo'])->name('vendas.artigos');
+
+
+
+
 
 //retorno das moedas existentes
 Route::get('/moedas',[MoedaController::class,'isMoedas'])->name('moedas.existencias');

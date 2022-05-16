@@ -10,14 +10,16 @@ class DashboardController extends Controller
 {
     //
 
-    public function dashboard(){
+    public function dashboard(){ 
         $vendas= new VendasController();
         $artigos = new ArtigoController();
 
-        $totalVendas = json_decode($vendas->qtdFacturas());
-        $totalArtigos= json_decode($artigos->qtdArtigos());
+         $totalVenda = $vendas->qtdFacturas('AKZ','2010-01-01',now()->format('Y-m-d'));
+         $totalVendas = json_decode($totalVenda->getContent());
+         $totalArtigos= json_decode($artigos->qtdArtigos());
 
  
+        
         
         return view('dashboard.dashboard',compact('totalVendas','totalArtigos'));
     }

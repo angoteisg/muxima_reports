@@ -53,7 +53,7 @@
              
                 <td>{{ $n=$n+1 }}</td>
                 <td>{{ $dado->artigo }} </td>
-                <th>{{ $dado->quantidade }}</th>
+                <th>{{ $dado->qtd }}</th>
                 <td>{{ number_format($dado->total,2) }}</td>
            
               </tr>

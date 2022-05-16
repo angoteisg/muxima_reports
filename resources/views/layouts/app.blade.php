@@ -368,19 +368,18 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li ><a href="{{ route('artigos.artigosVendidosGraficos') }}"><i class="fa fa-circle-o"></i>Artigos mais Vendidos<small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Top 5</font></font></small> </a></li>
+            <li ><a href="{{ route('artigos.artigosVendidosGraficos') }}"><i class="fa fa-circle-o"></i>Artigos mais Vendidos <small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Top 5</font></font></small> </a></li>
             <li ><a href="{{ route('artigos.clientesGraficos') }}"><i class="fa fa-circle-o"></i>Maiores Clientes <small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Top 5</font></font></small> </a></li>
+            <li ><a href="{{ route('vendas.distribuicaoMensal') }}"><i class="fa fa-circle-o"></i>Distribuição Mensal <small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Meses</font></font></small> </a></li>
             
-            <li ><a href=" {{ route('artigos.artigosVendidosListas')  }}"><i class="fa fa-circle-o"></i>Artigos Vendidos<small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lista</font></font></small> </a></li>
-           <li ><a href="{{ route('artigos.clientesListas') }}"><i class="fa fa-circle-o"></i>Clientes <small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Lista</font></font></small> </a></li>
+          
             
-            
-            <li ><a href="{{ route('artigos.vendasGraficos') }}"><i class="fa fa-circle-o"></i>Indicadores de Venda <small class="label pull-right bg-maroon"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Geral</font></font></small> </a></li>
+            <li ><a href="{{ route('artigos.vendasIndicadores') }}"><i class="fa fa-circle-o"></i>Indicadores de Venda <small class="label pull-right bg-maroon"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Geral</font></font></small> </a></li>
          {{-- <liclass="active"><ahref="route('vendas.vendasGraficos')}}"><i class="fa fa-circle-o"></i> Gráficos</a></li>--}}
-            <li><a href="{{ route('vendas.vendasLista') }}"><i class="fa fa-circle-o"></i>Lista</a></li>
+           
           </ul>
         </li>
-  
+  {{--
         <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Compras</span>
@@ -393,7 +392,7 @@
             <li><a href="{{ route('compras.comprasLista') }}"><i class="fa fa-circle-o"></i>Lista</a></li>
           </ul>
         </li>
-     
+     --}}
      
 
 
@@ -409,9 +408,10 @@
           <ul class="treeview-menu">
             <li ><a href="{{ route('artigos.artigosDisponiveisGraficos') }}"><i class="fa fa-circle-o"></i>Artigos Disponiveis <small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Top 5</font></font></small></a></li>
             <li ><a href="{{ route('artigos.artigosIndisponiveisGraficos') }}"><i class="fa fa-circle-o"></i>Artigos Indisponiveis <small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Top 5</font></font></small></a></li>
-            <li><a href="{{ route('artigos.artigosDisponiveisLista') }}"><i class="fa fa-circle-o"></i>Artigos Disponiveis <small class="label pull-right bg-yellow"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lista</font></font></small> </a></li>
-            <li><a href="{{ route('artigos.artigosIndisponiveisLista') }}"><i class="fa fa-circle-o"></i>Artigos Indisponiveis <small class="label pull-right bg-yellow"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lista</font></font></small></a></li>
-          </ul>
+       {{-- <li><ahref="route('artigos.artigosIndisponiveisLista')}}"><i class="fa fa-circle-o"></i>Artigos Indisponiveis <small class="label pull-right bg-yellow"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lista</font></font></small></a></li>--}}
+        
+      
+      </ul>
         </li>
 
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Geral</span></a></li>
