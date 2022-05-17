@@ -81,6 +81,10 @@ Route::get('/artigos/quantidade/',[ArtigoController::class,'qtdArtigos'])->name(
 Route::get('/artigos/disponiveis/',[ArtigoController::class,'artigosDisponiveis'])->name('artigos.disponiveis');
 Route::get('/artigos/indisponiveis/',[ArtigoController::class,'artigosIndisponiveis'])->name('artigos.indisponiveis');
 
+//Listagens dos reports em PDF - By. Etevaldo Antunes
+Route::get('/pdf/artigos/indisponiveis/',['App\Http\Controllers\PdfController','report_artigosIndisponiveis'])->name('pdf.artigosIndisponiveis');
+Route::get('/pdf/vendas/artigos/',['App\Http\Controllers\PdfController','report_topVendaArtigo'])->name('pdf.report_topVendaArtigo');
+
 //Reports Referentes a Vendas
 Route::get('/vendas/quantidade/facturas/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'qtdFacturas'])->name('vendas.quantidade.facturas');
 Route::get('/vendas/quantidade/notascredito/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'qtdNotasCredito'])->name('vendas.quantidade.notascredito');
@@ -90,6 +94,12 @@ Route::get('/vendas/artigos/{moeda}/{data_inicio}/{data_fim}',[VendasController:
 
 
 
+//Reports Referentes a Encomendas - By. Etevaldo Antunes
+Route::get('/encomendas/clientes/quantidade/', ['App\Http\Controllers\EncomendaController', 'qtdEncomendasCliente'])->name('encomendas.clientes.quantidade');
+Route::get('/encomendas/clientes/quantidade/{moeda}/{data_inicio}/{data_fim}', ['App\Http\Controllers\EncomendaController', 'qtdEncomendasMes'])->name('encomendas.clientes.quantidade.mes');
+
+Route::get('/encomendas/clientes/mais/{moeda}/{data_inicio}/{data_fim}', ['App\Http\Controllers\EncomendaController', 'clientesMaisEncomendas'])->name('encomendas.clientes.maisencomendas');
+Route::get('/encomendas/clientes/mes/{moeda}/{ano}', ['App\Http\Controllers\EncomendaController', 'clienteEncomendaMes'])->name('encomendas.cliente.mes');
 
 
 //retorno das moedas existentes
