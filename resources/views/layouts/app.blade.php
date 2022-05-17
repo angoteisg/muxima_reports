@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="{{ asset('assets/dist/css/AdminLTE.min.css')}}">
   
   <!-- Morris chart -->
-  <link rel="stylesheet" href="{{ asset('assets/bower_components/morris.js/morris.css')}}">
+  {{-- <linkrel="stylesheet"href="asset('assets/bower_components/morris.js/morris.css')}}">---}}
   <!-- jvectormap -->
   <link rel="stylesheet" href="{{ asset('assets/bower_components/jvectormap/jquery-jvectormap.css')}}">
   <!-- Date Picker -->
@@ -41,6 +41,22 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <style>
+  @media only screen and (max-width: 1302px) {
+ #data_inicio{
+   width: 40px;
+   
+ }
+ #data_fim{
+   width:40px;
+ }
+}
+
+    
+
+   
+  </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -308,9 +324,9 @@
           </li>
           <!-- Control Sidebar Toggle Button -->
           @if(Auth::user()->name=='admin')
-          <li>
+          {{--<li>
             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
+          </li>--}}
           @endif
         </ul>
       </div>
@@ -352,14 +368,18 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li ><a href="{{ route('artigos.artigosVendidosGraficos') }}"><i class="fa fa-circle-o"></i>Artigos Vendidos G</a></li>
-            <li ><a href="{{ route('artigos.clientesGraficos') }}"><i class="fa fa-circle-o"></i>Clientes G</a></li>
-            <li ><a href="{{ route('artigos.vendasGraficos') }}"><i class="fa fa-circle-o"></i>Vendas G</a></li>
+            <li ><a href="{{ route('artigos.artigosVendidosGraficos') }}"><i class="fa fa-circle-o"></i>Artigos mais Vendidos <small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Top 5</font></font></small> </a></li>
+            <li ><a href="{{ route('artigos.clientesGraficos') }}"><i class="fa fa-circle-o"></i>Maiores Clientes <small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Top 5</font></font></small> </a></li>
+            <li ><a href="{{ route('vendas.distribuicaoMensal') }}"><i class="fa fa-circle-o"></i>Distribuição Mensal <small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Meses</font></font></small> </a></li>
+            
+          
+            
+            <li ><a href="{{ route('artigos.vendasIndicadores') }}"><i class="fa fa-circle-o"></i>Indicadores de Venda <small class="label pull-right bg-maroon"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Geral</font></font></small> </a></li>
          {{-- <liclass="active"><ahref="route('vendas.vendasGraficos')}}"><i class="fa fa-circle-o"></i> Gráficos</a></li>--}}
-            <li><a href="{{ route('vendas.vendasLista') }}"><i class="fa fa-circle-o"></i>Lista</a></li>
+           
           </ul>
         </li>
-  
+  {{--
         <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Compras</span>
@@ -372,7 +392,7 @@
             <li><a href="{{ route('compras.comprasLista') }}"><i class="fa fa-circle-o"></i>Lista</a></li>
           </ul>
         </li>
-     
+     --}}
      
 
 
@@ -386,11 +406,12 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li ><a href="{{ route('artigos.artigosDisponiveisGraficos') }}"><i class="fa fa-circle-o"></i>Artigos Disponiveis(MenorQtd) G</a></li>
-            <li ><a href="{{ route('artigos.artigosIndisponiveisGraficos') }}"><i class="fa fa-circle-o"></i>Artigos Indisponiveis G</a></li>
-            <li><a href="{{ route('artigos.artigosDisponiveisLista') }}"><i class="fa fa-circle-o"></i>Disponiveis L</a></li>
-            <li><a href="{{ route('artigos.artigosIndisponiveisLista') }}"><i class="fa fa-circle-o"></i>Indisponiveis L</a></li>
-          </ul>
+            <li ><a href="{{ route('artigos.artigosDisponiveisGraficos') }}"><i class="fa fa-circle-o"></i>Artigos Disponiveis <small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Top 5</font></font></small></a></li>
+            <li ><a href="{{ route('artigos.artigosIndisponiveisGraficos') }}"><i class="fa fa-circle-o"></i>Artigos Indisponiveis <small class="label pull-right bg-green"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Top 5</font></font></small></a></li>
+       {{-- <li><ahref="route('artigos.artigosIndisponiveisLista')}}"><i class="fa fa-circle-o"></i>Artigos Indisponiveis <small class="label pull-right bg-yellow"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lista</font></font></small></a></li>--}}
+        
+      
+      </ul>
         </li>
 
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Geral</span></a></li>
@@ -638,8 +659,8 @@
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset('assets/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- Morris.js charts -->
-<script src="{{ asset('assets/bower_components/raphael/raphael.min.js')}}"></script>
-<script src="{{ asset('assets/bower_components/morris.js/morris.min.js')}}"></script>
+{{-- <scriptsrc="asset('assets/bower_components/raphael/raphael.min.js') "></script>
+<script src="{{ asset('assets/bower_components/morris.js/morris.min.js')}}"></script>--}}
 <!-- Sparkline -->
 <script src="{{ asset('assets/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js')}}"></script>
 <!-- jvectormap -->
@@ -669,6 +690,8 @@
 <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <!-- ChartJS -->
 <script src="{{ asset('assets/bower_components/chart.js/Chart.js')}}"></script>
+<script src="{{ asset('assets/bower_components/chart.js/Chart.min.js')}}"></script>
+
 @include('layouts.listaJs')
 @include('layouts.graficoJs')
 

@@ -11,76 +11,81 @@ use phpDocumentor\Reflection\Types\Null_;
 class VendasController extends Controller
 {
 
-    /*Função qtdFacturas() Retorna Quantidade de Facturas Emitidas no ERP Primavera
+    /*Função qtdNotasCredito() Retorna Quantidade de Facturas Emitidas no ERP Primavera
     Criado: Ricardo Neves
     Data Criação: 18/04/2022
     Ultima Modificação: 18/04/2022
     */
-    public function qtdFacturas(){
-        $facturas = DB::connection('sqlsrv')->select("select COUNT(*) as quantidade from CabecDoc where TipoDoc = 'FA';");
-        return json_encode(["quantidade" => $facturas[0]->quantidade]);
+    public function qtdNotasCredito($moeda, $data_inicio, $data_fim){
+        $NotasCreditoController = new NotasCreditoController;
+        return $NotasCreditoController->qtdNotasCredito($moeda, $data_inicio, $data_fim);
     }
 
-    /*Função totalFacturas Retorna o total em Dinheiro das 'FA' Emitidas no ERP Primavera
+    /*Função qtdFacturas() Retorna Quantidade de Notas de Credito Emitidas no ERP Primavera
+    Criado: Ricardo Neves
+    Data Criação: 18/04/2022
+    Ultima Modificação: 18/04/2022
+    */
+    public function qtdFacturas($moeda, $data_inicio, $data_fim){
+        $FacturaController = new FacturaController;
+        return $FacturaController->qtdFacturas($moeda, $data_inicio, $data_fim);
+    }
+
+    /*Função totalVendas Retorna o total em Dinheiro das vendas Emitidas no ERP Primavera
     Parametros ($moeda - Indica a Moeda Na qual queremos ver o Total;
     $data_inicio e $data_fim indicam respectivamente o inicio e o fim do intervalo em Datas)
     Formato da data = 2022-04-18 - ano-mes-dia
-    
     Criado: Ricardo Neves
     Data Criação: 18/04/2022
-    Ultima Modificação: 18/04/2022
+    Ultima Modificação: 09/05/2022
     */
 
-    public function totalFacturas($moeda, $data_inicio, $data_fim){
+    public function totalVendas($moeda, $data_inicio, $data_fim){
         try{
-            $facturas = DB::connection('sqlsrv')->select("select sum(TotalDocumento) as total from CabecDoc where TipoDoc = 'FA' and Moeda='".$moeda."' and DataGravacao >='".$data_inicio."' and DataGravacao <'".$data_fim."';");
-            return json_encode(["total" => $facturas[0]->total ?? 0]);
+            $facturas = new FacturaController;
+            $notas_credito = new NotasCreditoController;
+
+            $total_faturas = $facturas->totalFacturas($moeda, $data_inicio, $data_fim);
+            $total_notas_credito = $notas_credito->totalNotasCredito($moeda, $data_inicio, $data_fim);
+             
+            return response()->json(["total" => ($total_faturas + $total_notas_credito ?? 0)]);
         }catch(Exception $e){
-            return json_encode(array(['mensagem' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]));
+            return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
         }
     }
 
 /////////////////////////////////GRAFICOS CLIENTES/////////////////////////////////
-    public function clientesGraficosBusca($moeda, $data_inicio, $data_fim,$cliente,$valor,$labels,$data){
-        $clientes=Null;
-        $clientes= json_decode( $this->topVendaCliente($moeda, $data_inicio, $data_fim));
-        $cliente= [];
-            $valor= [];
-           // $a= count($clientes->nome);
-           // return $a;
-          if(isset($clientes->nome)){
 
-          
-                        foreach($clientes as $clientes) {
-                            
-                                   array_push($cliente,substr($clientes->nome,0,11));
-                                   array_push($valor,number_format($clientes->valor,0));
-                        
-                        
-                 
-                }
-        
-            }
-      
-        $labels= $cliente;
-        $data=$valor;
-    }
     public function clientesGraficosView(){
-        $cliente= [];
-        $valor= [];
-        $labels= [];
-        $data=[];
-        $busca= $this->clientesGraficosBusca("KZ", "2021-01-01", "2022-01-01",$cliente,$valor,$labels,$data);
-            return view('vendas.vendasClientesGraficos',compact("labels","data"));
+    
+        $dados= $this->topVendaCliente("AKZ", "2021-01-01", now()->format('Y-m-d'))->getContent();
+   
+            return view('vendas.vendasClientesGraficos',compact("dados"));
 
     }
+
+    public function clientesListasView(){
+    
+        $dado= json_decode( $this->topVendaCliente("AKZ", "2010-01-01", now()->format('Y-m-d'))->getContent());
+      
+
+            return view('vendas.vendasClientesLista',compact("dado"));
+
+    }
+
+
+
+    public function clientesListasFiltro($moeda, $data_inicio, $data_fim){
+    
+        $dados= $this->clientesGraficos($moeda,$data_inicio,$data_fim);
+        return $dados;
+    }
+
+
     public function clientesGraficos($moeda, $data_inicio, $data_fim){
-        $cliente= [];
-        $valor= [];
-        $labels= [];
-        $data=[];
-        $this->clientesGraficosBusca($moeda, $data_inicio, $data_fim,$cliente,$valor,$labels,$data);
-            return json_encode(["labels"=>$labels,"data"=>$data]);
+    
+        $dados=  $this->topVendaCliente($moeda, $data_inicio, $data_fim)->getContent();
+            return $dados;
 
     }
 //////////////////////FIM GRAFICOS CLIENTES///////////////////////////////
@@ -88,14 +93,19 @@ class VendasController extends Controller
 
 /////////////////////TOTAL DE VENDA//////////////////////////////////
 
-public function vendasGrafico(){
-    $totalVendas= json_decode( $this->totalFacturas("KZ", "2021-01-01", "2022-01-01"));
-        return view('vendas.vendasGraficos',compact("totalVendas"));
+public function vendasIndicadores(){
+    $totalVendas=json_decode( $this->totalVendas("AKZ", "2010-01-01", "2022-01-01")->getContent());
+    $totalVendas->total= number_format($totalVendas->total,2);
+    $totalNotasCredito = json_decode($this->qtdNotasCredito("AKZ", "2010-01-01", "2022-01-01")->getContent());
+    
+        return view('vendas.vendasIndicadores',compact("totalVendas","totalNotasCredito"));
 
 }
 public function vendasTotal($moeda, $data_inicio, $data_fim){
-    $totalVendas= json_decode(  $this->totalFacturas($moeda, $data_inicio, $data_fim));
-    return json_encode(["totalVendas"=>$totalVendas]);
+    $totalVendas= json_decode(  $this->totalVendas($moeda, $data_inicio, $data_fim)->getContent());
+    $totalVendas->total= number_format($totalVendas->total,2);
+    $totalNotasCredito = json_decode($this->qtdNotasCredito($moeda, $data_inicio, $data_fim)->getContent());
+    return json_encode(["totalVendas"=>$totalVendas,"totalNotasCredito"=>$totalNotasCredito]);
 
 }
  
@@ -103,53 +113,87 @@ public function vendasTotal($moeda, $data_inicio, $data_fim){
 
     
 /////////////////////////////////GRAFICOS ARTIGOS/////////////////////////////////
-public function artigoGraficosBusca($moeda, $data_inicio, $data_fim,$artigo,$valor,$labels,$data){
+
+public function artigoGraficosView(){  
+
+    $dado= $this->topVendaArtigo('AKZ', '2010-01-01', now()->format('Y-m-d'));
+     $dados=  $dado->getContent();
    
-    $artigos= json_decode( $this->topVendaArtigo($moeda, $data_inicio, $data_fim));
-  
-       // $a= count($artigos->nome);
-       // return $a;
-      if(isset($artigos->nome)){
 
-      
-                    foreach($artigos as $artigos) {
-                        
-                               array_push($artigo,substr($artigos->nome,0,11));
-                               array_push($valor,number_format($artigos->valor,0));
-             
-            }
-    
-        }
-  
-    $labels = $artigo;
-    $data=$valor;
-}
-public function artigoGraficosView(){
-    $artigo= [];
-    $valor= [];
-    $labels= [];
-    $data=[];
-    $busca= $this->artigoGraficosBusca("AKZ", "2021-01-01", "2022-01-01",$artigo,$valor,$labels,$data);
-        return view('vendas.artigosVendidosGraficos',compact("labels","data"));
+        return view('vendas.artigosVendidosGraficos',compact("dados"));
 
 }
+
+public function artigoListasView(){  
+
+    $dado= json_decode($this->topVendaArtigo('AKZ', '2020-01-01', now()->format('Y-m-d'))->getContent());
+
+        return view('vendas.artigosVendidosLista',compact("dado"));
+
+}
+
+
+public function artigoListasImprimir($moeda=null, $data_inicio=null, $data_fim=null){  
+
+    if($moeda){
+            $dado=  json_decode($this->topVendaArtigo($moeda, $data_inicio, $data_fim)->getContent());
+    }else{
+        $dado=  json_decode($this->topVendaArtigo('AKZ', '2000-01-01', now()->format('Y-m-d'))->getContent());
+    }
+
+        return view('impressao.artigosVendidos',compact("dado"));
+
+}
+
+
 public function artigoGraficos($moeda, $data_inicio, $data_fim){
-    $artigo= [];
-    $valor= [];
-    $labels= [];
-    $data=[];
-    $this->artigoGraficosBusca($moeda, $data_inicio, $data_fim,$artigo,$valor,$labels,$data);
-        return json_encode(["labels"=>$labels,"data"=>$data]);
+   
+    $dados= $this->topVendaArtigo($moeda, $data_inicio, $data_fim)->getContent();
+
+
+        return $dados;
 
 }
+
+
+
+////////////////////////////////////////DISTRIBUÇÃO MENSAL///////////////////////////
+
+public function distribuicaoMensalView(){
+        $dados = $this->distribuicaoMensal('AKZ', '2000-01-01', now()->format('Y-m-d'))->getContent();
+      //  return $dados;
+        return view('vendas.distribuicaoMensal',compact("dados"));
+}
+
+public function distribuicaoMensalGrafico($moeda, $data_inicio, $data_fim){
+    $dados = $this->distribuicaoMensal($moeda, $data_inicio, $data_fim)->getContent();
+
+    return $dados;
+}
+
+public function distribuicaoMensalClienteGrafico($moeda, $data_inicio, $data_fim,$cliente){
+    $dados = $this->distribuicaoMensalCliente($moeda, $data_inicio, $data_fim,$cliente)->getContent();
+
+    return $dados;
+}
+
+
+/////////////////////////////////////// FIM  DISTRIBUICAO MENSAL//////////////////////////
 //////////////////////FIM GRAFICOS ARTIGOS///////////////////////////////
 
 
-
-
-
-
-
+    public function orderTotal($arr){
+        $size = count($arr)-1;
+        for ($i=0; $i<$size; $i++) {
+            for ($j=0; $j<$size-$i; $j++) {
+                $k = $j+1;
+                if ($arr[$k]->total > $arr[$j]->total) {
+                    list($arr[$j], $arr[$k]) = array($arr[$k], $arr[$j]);
+                }
+            }
+        }
+        return $arr;
+    }
 
 
     /*Função topVendaCliente Retorna o top com o nome e o somatorio do valor de compras em Dinheiro dos clientes Emitidas no ERP Primavera
@@ -164,30 +208,25 @@ public function artigoGraficos($moeda, $data_inicio, $data_fim){
 
     public function topVendaCliente($moeda, $data_inicio, $data_fim){
         try{
-            $facturas = DB::connection('sqlsrv')->select("select NomeFac as nome, sum(TotalDocumento) as total 
-            from CabecDoc 
-            where TipoDoc='FA'
-            and Moeda='".$moeda."' 
-            and DataGravacao >='".$data_inicio."' 
-            and DataGravacao <'".$data_fim."'  
-            group by NomeFac 
-            order by total desc;");
-            
-            if(empty($facturas)){
-                return json_encode(array(['Cliente' => "Nenhum Cliente Encontrado",'total' => -1]));
+            $facturas = new FacturaController;
+            $notas_credito = new NotasCreditoController;
+
+            $top_facturas = $facturas->topFacturaCliente($moeda, $data_inicio, $data_fim);
+            $top_notas_credito = $notas_credito->topNotasCreditoCliente($moeda, $data_inicio, $data_fim);
+
+            for ($i=0; $i < count($top_facturas); $i++) { 
+                for ($j=0; $j < count($top_notas_credito); $j++) { 
+                    if(strcmp($top_facturas[$i]->cliente, $top_notas_credito[$j]->cliente) == 0){
+                        $top_facturas[$i]->total = (((float) $top_facturas[$i]->total) + ((float) $top_notas_credito[$j]->total));
+                        break;
+                    }
+                    $top_facturas[$i]->total = (float) $top_facturas[$i]->total;
+                }   
             }
 
-            $resultado = array();
-            $linha = array();
-
-            foreach ($facturas as $factura) {
-                $linha['cliente'] = $factura->nome;
-                $linha['total'] = $factura->total;
-                array_push($resultado,$linha);
-            }
-            return json_encode($resultado);
+            return response()->json($this->orderTotal($top_facturas));
         }catch(Exception $e){
-            return json_encode(array(['mensagem' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]));
+            return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
         }
     }
 
@@ -199,112 +238,111 @@ public function artigoGraficos($moeda, $data_inicio, $data_fim){
     
     Criado: Ricardo Neves
     Data Criação: 18/04/2022
-    Ultima Modificação: 28/04/2022
+    Ultima Modificação: 09/05/2022
     */ 
     public function topVendaArtigo($moeda, $data_inicio, $data_fim){
         try{
-            $facturas = DB::connection('sqlsrv')->select("select A.Descricao as artigo, sum(LD.Quantidade) as qtd, sum((LD.PrecUnit * LD.Quantidade)) as total 
-            from LinhasDoc LD, Artigo A, CabecDoc FA 
-            where A.Artigo = LD.Artigo 
-            and FA.Id = LD.IdCabecDoc 
-            and FA.TipoDoc = 'FA'
-            and FA.Moeda='".$moeda."' 
-            and FA.DataGravacao >='".$data_inicio."' 
-            and FA.DataGravacao <'".$data_fim."' 
-            group by (A.Descricao) 
-            order by total desc;");
-            
-            if(empty($facturas)){
-                return json_encode(array(['artigo' => "Nenhum Artigo Vendido",'quantidade'=>-1,'total' => -1]));
+            $factura = new FacturaController;
+            $notas_credito = new NotasCreditoController;
+
+            $top_artigo_factura = $factura->topFacturaArtigo($moeda, $data_inicio, $data_fim);
+            $top_artigo_notas_credito = $notas_credito->topNotasCreditoArtigo($moeda, $data_inicio, $data_fim);
+
+            for ($i=0; $i < count($top_artigo_factura); $i++) { 
+                for ($j=0; $j < count($top_artigo_notas_credito); $j++) { 
+                    if(strcmp($top_artigo_factura[$i]->artigo, $top_artigo_notas_credito[$j]->artigo) == 0){
+                        $top_artigo_factura[$i]->total = (((float) $top_artigo_factura[$i]->total) + ((float) $top_artigo_notas_credito[$j]->total));
+                        $top_artigo_factura[$i]->qtd = (((int) $top_artigo_factura[$i]->qtd) + ((int) $top_artigo_notas_credito[$j]->qtd));
+                        break;
+                    }
+                    $top_artigo_factura[$i]->total = (float) $top_artigo_factura[$i]->total;
+                    $top_artigo_factura[$i]->qtd = (int) $top_artigo_factura[$i]->qtd;
+                }   
             }
-
-            $resultado = array();
-            $linha = array();
-
-            //Busca das Notas de Credito
-
-            $notas_credito = json_decode($this->topNotasCredito($moeda, $data_inicio, $data_fim));
-
-
-            foreach ($facturas as $factura) {
-                $linha['artigo'] = $factura->artigo;
-                $linha['quantidade'] = $factura->qtd;
-                $linha['total'] = $factura->total;
-                array_push($resultado,$linha);
-            }
-            return json_encode($this->ajusteVendasNotasCredito($resultado,$notas_credito));
-        
+            return response()->json($top_artigo_factura);
         }catch(Exception $e){
-            return json_encode(array(['mensagem' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]));
+            return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
         }
     }
-
-
-
-
- /*Função topVendaArtigo Retorna os Artigos mais comprados com quantidades de compra e total em dinheiro das mesmas Emitidas no ERP Primavera
-    Parametros ($moeda - Indica a Moeda Na qual queremos ver o Total;
-    $data_inicio e $data_fim indicam respectivamente o inicio e o fim do intervalo em Datas)
-    Formato da data = 2022-04-18 - ano-mes-dia
     
-    Criado: Ricardo Neves
-    Data Criação: 28/04/2022
-    Ultima Modificação: 28/04/2022
-    */ 
-    public function topNotasCredito($moeda, $data_inicio, $data_fim){
+    
+
+    public function demandaMeses($datas){
+        $qtd_mes = array (1 => 0 ,2 => 0,3 => 0,4 =>0 ,5 => 0,6 => 0 ,7 =>0,8 =>0,9 =>0,10 =>0,11 =>0,12 =>0);   //Array com os dias em PT com a quantidade em 0    
+        foreach ($datas as $data=>$value) {
+            $mes = (int) strftime('%m', strtotime($value->dt)); //a função strtotime com base uma data busca os meses em PT porque mudamos o local com setlocale
+            $qtd_mes[$mes] += floatval($value->total); //então sempre que encontrar um dia soma na sua posisão apenas   
+        }
+        return $qtd_mes;
+    }
+
+    public function ajusteDemanda($faturas, $notas_credito){
+        for ($i=1; $i <= 12; $i++) { 
+            $faturas[$i] += $notas_credito[$i];
+        }
+        return $faturas;
+    }
+
+    public function distribuicaoMensal($moeda, $data_inicio, $data_fim){
         try{
-            $facturas = DB::connection('sqlsrv')->select("select A.Descricao as artigo, sum(LD.Quantidade) as qtd, sum((LD.PrecUnit * LD.Quantidade)) as total 
-            from LinhasDoc LD, Artigo A, CabecDoc FA 
-            where A.Artigo = LD.Artigo 
-            and FA.Id = LD.IdCabecDoc 
-            and FA.TipoDoc = 'NC'
-            and FA.Moeda='".$moeda."' 
-            and FA.DataGravacao >='".$data_inicio."' 
-            and FA.DataGravacao <'".$data_fim."' 
-            group by (A.Descricao) 
-            order by total desc;");
-            
-            if(empty($facturas)){
-                return json_encode(array(['artigo' => "Nenhum Artigo Vendido",'quantidade'=>-1,'total' => -1]));
-            }
-
-            $resultado = array();
-            $linha = array();
-
-            foreach ($facturas as $factura) {
-                $linha['artigo'] = $factura->artigo;
-                $linha['quantidade'] = $factura->qtd;
-                $linha['total'] = $factura->total;
-                array_push($resultado,$linha);
-            }
-            return json_encode($resultado);
-        
-        }catch(Exception $e){
-            return json_encode(array(['mensagem' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]));
-        }
-    }
-
-
-/*Função ajusteVendasNotasCredito debita as notas de credito ao valor total das facturas Emitidas no ERP Primavera
-    Parametros ($notas_credito - Indica as notas de credito);
-    $facturas indica as facturas
+            $factura = new FacturaController;
+            $notas_credito = new NotasCreditoController;
     
-    Criado: Ricardo Neves
-    Data Criação: 28/04/2022
-    Ultima Modificação: 28/04/2022
-    */ 
-    public function ajusteVendasNotasCredito($facturas,$notas_credito){
-
-        for ($i=0; $i < count($facturas); $i++) { 
-            for ($j=0; $j < count($notas_credito); $j++) { 
-                if(strcmp($facturas[$i]["artigo"], $notas_credito[$j]->artigo) == 0){
-                    $facturas[$i]["total"]-=$notas_credito[$j]->total;
-                    $facturas[$i]["quantidade"] += ($notas_credito[$j]->quantidade);
-                    break;
-                }
-            }
+            $total_faturas = $factura->demandaMesFactura($moeda, $data_inicio, $data_fim);
+            $total_notas_credito = $notas_credito->demandaMesNotasCredito($moeda, $data_inicio, $data_fim);
+    
+            $faturas = $this->demandaMeses($total_faturas); // demanda por mes de facturas
+            $notas_credito = $this->demandaMeses($total_notas_credito); // demanda por mes Notas de credito
+           
+            return response()->json($this->ajusteDemanda($faturas, $notas_credito));
+        }catch (Exception $e){
+            return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
         }
-        return $facturas;
+        
     }
 
+
+    public function distribuicaoMensalCliente($moeda, $data_inicio, $data_fim,$cliente){
+        try{
+            $factura = new FacturaController;
+            $notas_credito = new NotasCreditoController;
+    
+            $total_faturas = $factura->demandaMesClienteFactura($moeda, $data_inicio, $data_fim,$cliente);
+            $total_notas_credito = $notas_credito->demandaMesClienteNotasCredito($moeda, $data_inicio, $data_fim,$cliente);
+    
+            $faturas = $this->demandaMeses($total_faturas); // demanda por mes de facturas
+            $notas_credito = $this->demandaMeses($total_notas_credito); // demanda por mes Notas de credito
+           
+            return response()->json($this->ajusteDemanda($faturas, $notas_credito));
+
+        }catch (Exception $e){
+            return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
+        }
+    }
+
+    public function totalFacturas($moeda, $data_inicio, $data_fim){
+        try{
+            $facturas = new FacturaController;
+            $total_faturas = $facturas->totalFacturas($moeda, $data_inicio, $data_fim);
+            return response()->json(["total"=>$total_faturas]);
+        }catch (Exception $e){
+            return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
+        }
+        
+        $notas_credito = new NotasCreditoController;
+
+        $total_notas_credito = $notas_credito->totalNotasCredito($moeda, $data_inicio, $data_fim);
+    }
+
+    public function totalNotasCredito($moeda, $data_inicio, $data_fim){
+        try{
+            $notas_credito = new NotasCreditoController;
+            $total_notas_credito = $notas_credito->totalNotasCredito($moeda, $data_inicio, $data_fim);
+            return response()->json(["total"=>$total_notas_credito]);
+        }catch (Exception $e){
+            return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
+        }
+        
+
+    }
 }
