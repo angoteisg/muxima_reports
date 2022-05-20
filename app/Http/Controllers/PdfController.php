@@ -31,9 +31,9 @@ class PdfController extends Controller
 
         $this->Artigo = new VendasController();
 
-        $artigosMaisComprados = json_decode(  $this->Artigo->topVendaArtigo($moeda, $data_inicio, $data_fim));
+        $artigosMaisComprados = json_decode($this->Artigo->topVendaArtigo($moeda, $data_inicio, $data_fim));
 
-        //dd($artigosMaisComprados);
+        dd($artigosMaisComprados);
 
         $pdf = PDF::loadView('pdf.topVendasArtigo',compact('artigosMaisComprados'));
         $pdf->getDOMPdf()->set_option('isPhpEnabled', true);  

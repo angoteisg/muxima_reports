@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArtigoController;
 use App\Http\Controllers\VendasController;
 use App\Http\Controllers\MoedaController;
+use App\Http\Controllers\ClientesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,3 +113,9 @@ Route::get('/demanda/{moeda}/{data_inicio}/{data_fim}/{cliente}',[VendasControll
 //totais
 Route::get('/total/facturas/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'totalFacturas'])->name('total.facturas');
 Route::get('/total/notascredito/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'totalNotasCredito'])->name('total.notascredito');
+
+Route::get('/percentagem/documentos/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'percentagemNotasCreditoFactura'])->name('percentagem');
+Route::get('/balanco/{moeda}/{ano1}/{ano2}',[VendasController::class,'comparacaoAnos'])->name('balanco.ano');
+Route::get('/balanco/cliente/{moeda}/{cliente}/{ano1}/{ano2}',[VendasController::class,'comparacaoAnosCliente'])->name('balanco.ano.cliente');
+
+Route::get('/clientes/{data_inicio}/{data_fim}',[ClientesController::class,'clientesData'])->name('clientes.all');

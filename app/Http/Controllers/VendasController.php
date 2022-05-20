@@ -136,12 +136,12 @@ public function artigoListasView(){
 public function artigoListasImprimir($moeda=null, $data_inicio=null, $data_fim=null){  
 
     if($moeda){
-            $dado=  json_decode($this->topVendaArtigo($moeda, $data_inicio, $data_fim)->getContent());
+        $dado =  json_decode($this->topVendaArtigo($moeda, $data_inicio, $data_fim)->getContent());
     }else{
-        $dado=  json_decode($this->topVendaArtigo('AKZ', '2000-01-01', now()->format('Y-m-d'))->getContent());
+        $dado =  json_decode($this->topVendaArtigo('AKZ', '2000-01-01', now()->format('Y-m-d'))->getContent());
     }
 
-        return view('impressao.artigosVendidos',compact("dado"));
+    return view('impressao.artigosVendidos',compact("dado"));
 
 }
 
@@ -342,7 +342,46 @@ public function distribuicaoMensalClienteGrafico($moeda, $data_inicio, $data_fim
         }catch (Exception $e){
             return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
         }
-        
+    }
 
+    public function percentagemNotasCreditoFactura($moeda, $data_inicio, $data_fim){
+        try{
+            $factura = new FacturaController;
+            $notas_credito = new NotasCreditoController;
+            $total_notas_credito = $notas_credito->totalNotasCredito($moeda, $data_inicio, $data_fim) * (-1);
+            $total_facturas = $factura->totalFacturas($moeda, $data_inicio, $data_fim);
+
+            $total = $total_facturas + $total_notas_credito;
+
+            $percentagem_factura = ($total_facturas * 100) / $total;
+            $percentagem_notas_credito = ($total_notas_credito * 100) / $total;
+
+           
+            return response()->json(["facturas" => $percentagem_factura, "notas_credito"=> $percentagem_notas_credito]);
+        }catch (Exception $e){
+            return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
+        }
+    }
+
+    public function comparacaoAnos($moeda, $ano1, $ano2){
+        try{
+            $total_ano1 = $this->distribuicaoMensal($moeda, $ano1."-01-01", $ano1."-12-31");
+            $total_ano2 = $this->distribuicaoMensal($moeda, $ano2."-01-01", $ano2."-12-31");
+        
+            return response()->json(["ano1" => $total_ano1->getData(), "ano2" => $total_ano2->getData()]);
+        }catch(Exception $e){
+            return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
+        }
+    }
+
+    public function comparacaoAnosCliente($moeda, $cliente ,$ano1, $ano2){
+        try{
+            $total_ano1 = $this->distribuicaoMensalCliente($moeda, $ano1."-01-01", $ano1."-12-31",$cliente);
+            $total_ano2 = $this->distribuicaoMensalCliente($moeda, $ano2."-01-01", $ano2."-12-31",$cliente);
+        
+            return response()->json(["ano1" => $total_ano1->getData(), "ano2" => $total_ano2->getData()]);
+        }catch(Exception $e){
+            return response()->json(['msg' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
+        }
     }
 }
