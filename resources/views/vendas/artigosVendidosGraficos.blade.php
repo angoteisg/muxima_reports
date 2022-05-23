@@ -69,7 +69,7 @@
             </div>
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
-                <thead>
+               {{-- <thead>
                 <tr>
                   <th>#</th>
                   <th>Nome</th>
@@ -91,7 +91,7 @@
              
                 </tr>
                 @endforeach
-                </tbody>
+                </tbody>--}}
                
               </table>
             </div>

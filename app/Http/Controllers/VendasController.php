@@ -109,7 +109,7 @@ public function vendasTotal($moeda, $data_inicio, $data_fim){
 
 }
  
-////////////////////FIM GRAFICOS DE VENDA/////////////////////////////
+////////////////////FIM GRAFICOS DE VENDA/////////////////////////////////////////
 
     
 /////////////////////////////////GRAFICOS ARTIGOS/////////////////////////////////
@@ -167,6 +167,8 @@ public function distribuicaoMensalView(){
 
 public function distribuicaoMensalGrafico($moeda, $data_inicio, $data_fim){
     $dados = $this->distribuicaoMensal($moeda, $data_inicio, $data_fim)->getContent();
+
+  
 
     return $dados;
 }
