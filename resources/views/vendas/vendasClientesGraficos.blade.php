@@ -66,7 +66,7 @@ $n=0;
               </div>
               <div class="box-body">
                 <table id="example1" class="table table-bordered table-striped">
-                  <thead>
+               {{--  <thead>
                   <tr>
                     <th>#</th>
                     <th>Nome</th>
@@ -86,7 +86,7 @@ $n=0;
                
                   </tr>
                   @endforeach
-                  </tbody>
+                  </tbody>--}}
                  
                 </table>
               </div>
@@ -195,7 +195,7 @@ $n=0;
                       <option value="USD">Dolar</option>
                     </select>
                     <label for="data_inicio">Inicio:</label>
-                <input type="date" class="form-control" value="2021-01-01" id="data_inicio"  >
+                <input type="date" class="form-control" value="2021-01-01" id="data_inicio">
               
                 
                 <label for="data_fim">Fim:</label>
@@ -204,6 +204,7 @@ $n=0;
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+            
             <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="filtro()">Submeter</button>
           </div>
         </div>

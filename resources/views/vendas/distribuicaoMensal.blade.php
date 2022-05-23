@@ -58,9 +58,9 @@
          
           <!-- /.box -->
 
-          <div class="box box-success">
+          <div class="box box-success" id="tabela">
             <div class="box-header with-border">
-              <h3 class="box-title">Lista de Artigos</h3>
+              <h3 class="box-title">Lista de Meses</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -68,9 +68,9 @@
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
             </div>
-            <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
+            <div class="box-body" >
+              <table id="example1" class="display  table table-bordered table-striped" style="width: 100%">
+             {{--   <thead>
                 <tr>
                   <th>#</th>
                   <th>Meses</th>
@@ -78,8 +78,8 @@
                   <th>Total</th>
                 
                 </tr>
-                </thead>
-                <tbody id="corpo">
+                </thead>--}}
+              {{--   <tbody id="corpo">
                   @foreach($meses as $meses)
                     
            
@@ -89,18 +89,37 @@
                
                   <td>{{ $n=$n+1 }}</td>
                   <td>{{ $mes[$n] }}</td>
-                  <td>{{ number_format($meses,2)}} </td>
+                  <td id="{{ $n }}">{{ number_format($meses,2)}} </td>
                  
              
                 </tr>
                 @endforeach
-                </tbody>
+                </tbody> --}} 
                
               </table>
             </div>
           </div>
 
-       
+        <!-- LINE CHART -->
+        <div class="box box-info">
+          <div class="box-header with-border">
+            <h3 class="box-title">Gráfico de Linha</h3>
+
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="chart" id="lineCharts">
+              <canvas id="lineChart" style="height:250px" ></canvas>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+
         </div>
         <!-- /.col (LEFT) -->
         <div class="col-md-6">
@@ -132,26 +151,7 @@
 
 
           </div>
-         {{-- <!-- LINE CHART -->
-          <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Gráfico de Linha</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <div class="box-body">
-              <div class="chart" id="lineCharts">
-                <canvas id="lineChart" style="height:250px" ></canvas>
-              </div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->--}}
-
+         
           <!-- BAR CHART -->
        
 

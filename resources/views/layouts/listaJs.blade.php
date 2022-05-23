@@ -1,71 +1,50 @@
 <script>
-    $(function () {
-      $('#example1').DataTable({
-        "lengthMenu":[[5,10,20,-1],[5,10,20,'Todos']],
-        "language": {
-        "sProcessing":    "Procesando...",
-        "sLengthMenu":    "Mostrar _MENU_ registos",
-        "sZeroRecords":   "Nenhum resultado encontrado",
-        "sEmptyTable":    "Nenhum dado disponivel nesta",
-        "sInfo":          "Registo de _START_ à _END_ de um total de _TOTAL_ registos",
-        "sInfoEmpty":     "Registo de 0 à 0 de um total de 0 registos",
-        "sInfoFiltered":  "(filtrado de um total de _MAX_ registos)",
-        "sInfoPostFix":   "",
-        "sSearch":        "Procure:",
-        "sUrl":           "",
-        "sInfoThousands":  ",",
-        "sLoadingRecords": "Carregando...",
-        "searchPlaceholder": "",
-        "oPaginate": {
-            "sFirst":    "Primero",
-            "sLast":    "Último",
-            "sNext":    "Seguinte",
-            "sPrevious": "Anterior"
-        },
-        "oAria": {
-            "sSortAscending":  ": Activar para ordenar a coluna de maneira ascendente",
-            "sSortDescending": ": Activar para ordenar a coluna de maneira descendente"
-        },
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    } 
-      })
-      $('#example2').DataTable({
-        'paging'      : true,
-        'lengthChange': true,
-        'searching'   : true,
-        'ordering'    : true,
-        'info'        : true,
-        'autoWidth'   : true,
-        
-      })
 
-      $('#example2').DataTable({
-        "lengthMenu":[[5,10,20,-1],[5,10,20,'Todos']],
-        "language": {
-        "sProcessing":    "Procesando...",
-        "sLengthMenu":    "Mostrar _MENU_ registos",
-        "sZeroRecords":   "Nenhum resultado encontrado",
-        "sEmptyTable":    "Nenhum dado disponivel nesta",
-        "sInfo":          "Registo de _START_ à _END_ de um total de _TOTAL_ registos",
-        "sInfoEmpty":     "Registo de 0 à 0 de um total de 0 registos",
-        "sInfoFiltered":  "(filtrado de um total de _MAX_ registos)",
-        "sInfoPostFix":   "",
-        "sSearch":        "Procure:",
-        "sUrl":           "",
-        "sInfoThousands":  ",",
-        "sLoadingRecords": "Carregando...",
-        "searchPlaceholder": "viagem, navio, agência",
-        "oPaginate": {
-            "sFirst":    "Primero",
-            "sLast":    "Último",
-            "sNext":    "Seguinte",
-            "sPrevious": "Anterior"
-        },
-        "oAria": {
-            "sSortAscending":  ": Activar para ordenar a coluna de maneira ascendente",
-            "sSortDescending": ": Activar para ordenar a coluna de maneira descendente"
-        }
-    } 
-      })
-    })
+ /*
+var n=0
+var me= {"1":"Janeiro","2":"Fevereiro","3":"Março","4":"Abril","5":"Maio","6":"Junho","7":"Julho","8":"Agosto","9":"Setembro","10":"Outubro","11":"Novembro","12":"Dezembro"}
+
+
+$(document).ready(function () {
+@isset($dados)
+
+
+
+var da={!! $dados !!}
+var dataSet = [];
+var j=0
+  console
+  console.log(me)
+for( j in da){
+
+  if($("#funcao").val()==6){
+      n=n+1
+   
+       dataSet.push([n,me[n],new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'AKZ' }).format(da[n])])
+       
+     }
+  
+}
+   
+ 
+    
+ 
+   
+    
+  
+   var tabela=  $('#example1').DataTable({
+         data: dataSet,
+         columns: [
+             { title: '#' },
+             { title: 'Meses' },
+             { title: 'Total' },
+           
+         ],
+     });
+
+     tabela.draw()
+     @endisset
+
+});
+    */
   </script>  

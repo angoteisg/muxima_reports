@@ -5,7 +5,178 @@ var barChart
 var pieChart 
 var areaChart
 var lineChartCanvas  
+
 var mes= ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
+var n=0
+var me= {"1":"Janeiro","2":"Fevereiro","3":"Março","4":"Abril","5":"Maio","6":"Junho","7":"Julho","8":"Agosto","9":"Setembro","10":"Outubro","11":"Novembro","12":"Dezembro"}
+var colunaDistribuicaoMensal =[
+  { title: '#' },
+  { title: 'Meses' },
+  { title: 'Total' }]
+
+var colunasArtigosVendidos= [   
+  {title:'#'},
+  {title:'Nome'},
+  {title:'Quantidade'},
+  {title:'Total'}]
+
+  var colunasClientesGrafico= [   
+  {title:'#'},
+  {title:'Nome',"render": function(data, type, row, meta){
+            if(type === 'display'){
+                data = `<a style="text-decoration: none;" onclick="distribuicao('`+ data +`' )"> `+ data +` </a>`;
+            }
+
+            return data;
+         }},
+  {title:'Total em Compras'}]
+
+  var colunasArtigos= [    
+  {title:'#'},
+  {title:'Descrição'},
+  {title:'Stock'}
+]
+
+
+var dataSet = [];
+var tabela
+
+
+
+
+function estruturaDataTable(coluna){
+  var estrutura ={columns:coluna,
+   
+              lengthMenu: [
+                      [5,10, 25, 50, -1],
+                      [5,10, 25, 50, 'Todos'],
+                  ],
+                 'paging'      : true,
+                'lengthChange': true,
+                'searching'   : true,
+                'ordering'    : true,
+                'info'        : true,
+                'autoWidth'   : true,
+                "language": {
+        "sProcessing":    "Procesando...",
+        "sLengthMenu":    "Mostrar _MENU_ registos",
+        "sZeroRecords":   "Nenhum resultado encontrado",
+        "sEmptyTable":    "Nenhum dado disponivel nesta",
+        "sInfo":          "Registo de _START_ à _END_ de um total de _TOTAL_ registos",
+        "sInfoEmpty":     "Registo de 0 à 0 de um total de 0 registos",
+        "sInfoFiltered":  "(filtrado de um total de _MAX_ registos)",
+        "sInfoPostFix":   "",
+        "sSearch":        "Procure:",
+        "sUrl":           "",
+        "sInfoThousands":  ",",
+        "sLoadingRecords": "Carregando...",
+        "searchPlaceholder": "",
+        "oPaginate": {
+            "sFirst":    "Primero",
+            "sLast":    "Último",
+            "sNext":    "Seguinte",
+            "sPrevious": "Anterior"
+        },
+        "oAria": {
+            "sSortAscending":  ": Activar para ordenar a coluna de maneira ascendente",
+            "sSortDescending": ": Activar para ordenar a coluna de maneira descendente"
+        }
+    } 
+      
+              } 
+
+                return estrutura
+}
+
+
+
+
+
+         if($("#funcao").val()==4){
+  
+        //  tabela=  $('#example1').DataTable(estruturaDataTable(colunaDistribuicaoMensal));
+   }
+   if($("#funcao").val()==5){
+    tabela=  $('#example1').DataTable(estruturaDataTable(colunasArtigos));
+ 
+   }
+
+   if($("#funcao").val()==1){
+    tabela=  $('#example1').DataTable(estruturaDataTable(colunasClientesGrafico));
+   }
+
+   if($("#funcao").val()==2){
+  
+    tabela=  $('#example1').DataTable(estruturaDataTable(colunasArtigosVendidos));
+   }
+
+   if($("#funcao").val()==6){
+    tabela=  $('#example1').DataTable(estruturaDataTable(colunaDistribuicaoMensal));
+
+          
+    }
+
+
+
+
+function constroiDataSet(dados,funcao){
+
+  var dataSet = []
+
+    if(funcao==1){
+          for( j in dados){
+        n=n+1
+              dataSet.push([n,dados[j].cliente,new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'AKZ' }).format(dados[j].total)])
+
+
+
+          }
+  }
+  
+  
+  if(funcao==2){
+    for( j in dados){
+        n=n+1
+              dataSet.push([n,dados[j].artigo,dados[j].qtd,new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'AKZ' }).format(dados[j].total)])
+
+
+
+          }
+  }
+  if(funcao==5){
+    for( j in dados){
+        n=n+1
+              dataSet.push([n,dados[j].descricao,new Intl.NumberFormat().format(dados[j].stock)])
+
+
+
+          
+          }
+  }
+
+  if(funcao==6){
+    for( j in dados){
+        n=n+1
+              dataSet.push([n,me[j],new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'AKZ' }).format(dados[j])])
+
+
+
+          }
+  }
+
+  return  dataSet
+}
+
+
+
+
+
+
+
+
+
+
+         
 
 
 function cortarNome(nome){
@@ -149,14 +320,14 @@ const config = {
     }
   }
 };
-/*
 
-if(typeof $("#lineChart") !='unefined'){
+
+if(typeof $("#lineChart").val() !='undefined'){
 
  lineChartCanvas          = document.getElementById('lineChart').getContext('2d')
 lineChart                = new Chart(lineChartCanvas,config)
 }
-*/
+
 
 
 
@@ -171,20 +342,49 @@ lineChart                = new Chart(lineChartCanvas,config)
 
 
 $(document).ready(function(){ 
-  
+
+  if (navigator.userAgent.indexOf('Chrome') != -1) {
+    $('input[type=date]').on('click', function(event) {
+        event.preventDefault();
+    });
+}
+
   @isset($dados)
 
  var dado=  {!! $dados !!}
 
  var dados=dado
- console.log(dado)
+
  var desc =[]
  var num = []
 var descricao
 var quantidade
 
-  
+var j=0
 
+
+ tabela.rows.add(constroiDataSet(dados,$("#funcao").val()))
+  tabela.draw()
+
+
+ 
+
+/*for( j in da){
+
+  if($("#funcao").val()==6){
+     
+       
+     }
+  
+}
+  */ 
+ 
+    
+ 
+   
+    
+  
+  
 
  for(let i=0; i<dados.length;i++){
    
@@ -209,16 +409,31 @@ var quantidade
 
    if($("#funcao").val()==2){
   
-    desc.push(cortarNome(dados[i].artigo))
+    desc.push(cortarNome(dados[i].artigo))  
     num.push(dados[i].qtd)
    }
 
    if($("#funcao").val()==6){
      
      num.push(dados[i])
+     n=n+1  
     }
    
  }
+
+ ///////////////////////////////////////////////////////CRIAÇÃO DAS TABELAS////////////////////////////////
+
+
+     
+
+
+    
+
+    
+///////////////////////////////////////////////////////FIM CRIAÇÃO DAS TABELAS////////////////////////////////
+ 
+
+
 
 
    @empty($dados) 
@@ -355,38 +570,13 @@ var quantidade
                           
                               
                       }
-                              
-                     /*
-                      if(funcao==6){
-                        $("tbody").html(' ')
+                          
 
 
-                                for(let i=1; i<=valor.length;i++){
-                                
-                                    
-                                    $("table > tbody").append(
-                                      `    <tr>
-                                          <td>`+i+`</td>
-                                          <td>`+mes[i]+`</td>
-                                            <td>`+valor[i]+`</td>
-                                        </tr>
+                    
+                     
+                 
 
-                                                        
-                                    `)
-                                }
-                                   
-                              }*/
-
-
-                   /*   if(funcao!=3){
-                      
-                            
-                                areaChartData.labels= data.labels
-                              areaChartData.datasets.data= data.data
-                              
-                      }*/
-                      
-                      
                       if(funcao==3){
 
                         $('#totalVendas').empty()
@@ -395,6 +585,13 @@ var quantidade
                         $('#totalNotasCredito').append(valor.totalNotasCredito.quantidade)
 
                       }else{
+                        n=0
+                          j=0
+                        
+                            tabela.clear().rows.add(constroiDataSet(valor,funcao)).draw();
+                          
+                        
+                        
                         if(lineChart){
                                   lineChart.destroy()
                       $("#lineChart").remove()
@@ -509,6 +706,10 @@ var quantidade
                     var total=[]
                     var num = []
                     var funcao = $("#funcao").val()
+
+                    if(funcao!=3){
+                      
+                    }
                       if(Object.keys(data).length==0){
                         areaChartData.labels= ["Não Foi encontrado nenhum dado para este periodo"]
                         areaChartData.datasets.data= [0]
