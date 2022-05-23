@@ -16,7 +16,7 @@ class PdfController extends Controller
         
         $this->Artigo = new ArtigoController();
 
-        $artigos = json_decode($this->Artigo->artigosIndisponiveis());
+        $artigos = $this->Artigo->artigosIndisponiveis()->getData();
         
         $pdf = PDF::loadView('pdf.artigos_indisponivel',compact('artigos'));
         $pdf->getDOMPdf()->set_option('isPhpEnabled', true);  
@@ -31,9 +31,7 @@ class PdfController extends Controller
 
         $this->Artigo = new VendasController();
 
-        $artigosMaisComprados = json_decode($this->Artigo->topVendaArtigo($moeda, $data_inicio, $data_fim));
-
-        dd($artigosMaisComprados);
+        $artigosMaisComprados = $this->Artigo->topVendaArtigo($moeda, $data_inicio, $data_fim)->getData();
 
         $pdf = PDF::loadView('pdf.topVendasArtigo',compact('artigosMaisComprados'));
         $pdf->getDOMPdf()->set_option('isPhpEnabled', true);  

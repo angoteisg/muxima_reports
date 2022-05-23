@@ -21,7 +21,7 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td style="text-align: left;">{{ $artigo->artigo }}</td>
-                <td style="text-align: left;">{{ $artigo->quantidade }}</td>
+                <td style="text-align: left;">{{ $artigo->qtd }}</td>
                 <td style="text-align: left;">{{ $artigo->total }}</td>
             </tr>
         @endforeach 

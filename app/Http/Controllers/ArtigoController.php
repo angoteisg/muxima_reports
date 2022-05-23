@@ -63,23 +63,15 @@ public function artigosIndisponiveisGraficos(){
     */
     public function artigosDisponiveis(){
         try{
-            $artigos = DB::connection('sqlsrv')->select("select A.Descricao, INV.StkActual from Artigo A, V_INV_ArtigoArmazem INV where A.Artigo = INV.Artigo and INV.StkActual > 0 order by INV.StkActual DESC ;");
-            $resultado = array();
-            $linha = array();
+            $artigos = DB::connection('sqlsrv')->select("select A.Descricao as descricao, INV.StkActual as stock from Artigo A, V_INV_ArtigoArmazem INV where A.Artigo = INV.Artigo and INV.StkActual > 0 order by INV.StkActual DESC ;");
 
             if(empty($artigos)){ 
-                return json_encode(array(['descricao' => "Todos Artigos Não Estão Disponiveis No Stock",'stock' => -1]));
-            }
-
-            foreach ($artigos as $artigo) {
-                $linha['descricao'] = $artigo->Descricao;
-                $linha['stock'] = $artigo->StkActual;
-                array_push($resultado,$linha);
+                return response()->json(['descricao' => "Todos Artigos Não Estão Disponiveis No Stock",'stock' => -1]);
             }
             
-            return json_encode($resultado);
+            return response()->json($artigos);
         }catch(Exception $e){
-            return json_encode(array(['mensagem' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]));
+            return response()->json(['mensagem' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
         }
     }
 
@@ -90,22 +82,15 @@ public function artigosIndisponiveisGraficos(){
     */
     public function artigosIndisponiveis(){
         try{
-            $artigos = DB::connection('sqlsrv')->select("select A.Descricao, INV.StkActual from Artigo A, V_INV_ArtigoArmazem INV where A.Artigo = INV.Artigo and INV.StkActual <= 0 ;");
-            $resultado = array();
-            $linha = array();
+            $artigos = DB::connection('sqlsrv')->select("select A.Descricao as descricao, INV.StkActual stock from Artigo A, V_INV_ArtigoArmazem INV where A.Artigo = INV.Artigo and INV.StkActual <= 0 ;");
 
             if(empty($artigos)){
-                return json_encode(array(['descricao' => "Todos Artigos Estão Disponiveis No Stock",'stock' => -1]));
+                return response()->json(['descricao' => "Todos Artigos Estão Disponiveis No Stock",'stock' => -1]);
             }
-            
-            foreach ($artigos as $artigo) {
-                $linha['descricao'] = $artigo->Descricao;
-                $linha['stock'] = $artigo->StkActual;
-                array_push($resultado,$linha);
-            }
-            return json_encode($resultado);
+
+            return response()->json($artigos);
         }catch(Exception $e){
-            return json_encode(array(['mensagem' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]));
+            return response()->json(['mensagem' => "Conexão Não Estabelecidade com a Base de Dados",'Erros'=>$e]);
         }
     }
 

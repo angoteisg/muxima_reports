@@ -11,13 +11,14 @@
 
     <table class="principal">
         <tr class="cabeca">
-            <td  style="text-align: left; position: sticky;" width="20">Nº</td>
-            <td width="" style="text-align: left;">Artigo</td>
-            <td style="text-align: left;" width="">Stock</td>
+            <td  style="text-align: center; position: sticky;" width="20">Nº</td>
+            <td width="150" style="text-align: left;">Artigo</td>
+            <td style="text-align: left;" width="70">Stock</td>
         </tr>
 
         @foreach($artigos as $artigo)
             <tr>
+              
                 <td>{{ $loop->iteration }}</td>
                 <td style="text-align: left;">{{ $artigo->descricao }}</td>
                 <td style="text-align: left;">{{ $artigo->stock }}</td>

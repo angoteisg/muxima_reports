@@ -14,7 +14,8 @@
 		
 			footer {
 				width: 100%;
-                position: fixed;
+				height: 1%;
+                position: absolute;
                 bottom: 0;
                 left: 0;
 			}
@@ -62,14 +63,14 @@
 		
 				$font = $fontMetrics->get_font("helvetica", "bold");
        
-        		$pdf->page_text(490, 775, "Página: {PAGE_NUM} de {PAGE_COUNT}", $font, 10,  array(0,0,0)); 
+        		$pdf->page_text(490, 793, "Página: {PAGE_NUM} de {PAGE_COUNT}", $font, 10,  array(0,0,0)); 
 			} 
 		</script>
 
 		
 		
 		@yield('footer') 
-		<footer>
+		<footer > 
 
 			<hr>
 			<div style="float: left; font-family: Arial Narrow, sans-serif  ">|<small> Muxima - Reports</small> </div>
