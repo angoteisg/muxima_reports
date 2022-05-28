@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Relatório</title>
+		<title>{{ $titulo }}</title>
 		<link rel="icon" href="{{ asset('storage/imagem/iconRel.png')}}">
 		<style type="text/css">
 			
