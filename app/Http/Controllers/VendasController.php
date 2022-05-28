@@ -126,7 +126,7 @@ public function artigoGraficosView(){
 
 public function artigoListasView(){  
 
-    $dado= json_decode($this->topVendaArtigo('AKZ', '2020-01-01', now()->format('Y-m-d'))->getContent());
+    $dado= json_decode($this->topVendaArtigo('AKZ', '2021-01-01', now()->format('Y-m-d'))->getContent());
 
         return view('vendas.artigosVendidosLista',compact("dado"));
 

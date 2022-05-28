@@ -16,16 +16,67 @@ $n=0;
        
       </h1>
       <ol class="breadcrumb">
-        <a href="{{ route('artigos.clientesListasFiltro',['AKZ','2021-01-01','2022-01-01']) }}" class="btn btn-primary btn-sm" id="gerarPDF" ><i class="fa fa-fw fa-print"></i></a>
+       {{-- <ahref="route('artigos.clientesListasFiltro',['AKZ','2021-01-01','2022-01-01']) " class="btn btn-primary btn-sm" id="gerarPDF" ><i class="fa fa-fw fa-print"></i></a>
  
         <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default"> <i class="fa fa-fw fa-filter"></i>      </a>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-       
+       --}}
         <li><a href="/dashboard"><i class="fa fa-dashboard"></i>  Página Inicial</a></li>
         <li><a href="#">Vendas</a></li>
         <li class="active"> <a href="{{ route('artigos.clientesGraficos') }}"> Maiores Clientes <small class="label pull-right" style="color: green;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Top 5</font></font></small> </a></li>
  
       </ol>
     </section>
+    <br>
+
+    <div class="col-md-12">
+      <div class="box box-success ">
+        <div class="box-header with-border">
+          <h3 class="box-title"><i class="fa fa-fw  fa-users"></i> Clientes</h3>
+  
+          <div class="box-tools pull-right">
+            
+           <a href="{{ route('pdf.report_clientes',['AKZ','2021-01-01','2022-01-01']) }}" id="gerarPDF" target="_blank" class="btn btn-default"><i class="fa fa-fw fa-file-pdf-o"> </i>PDF</a>
+          
+                 
+                    <select class="btn btn-primary"  name="moeda" onchange="filtro()" id="moeda" >
+                    <option disabled selected value="AKZ">Moeda</option>
+                      <option value="AKZ">Kwanza</option>
+                      <option value="EUR">Euro</option>
+                      <option value="USD">Dolar</option>
+                    </select>
+                    <small class="label btn-default btn-sm" > <font style="vertical-align: inherit;" ><font style="vertical-align: inherit;">Inicio:</font></font></small>
+  
+                 
+                    <div class="btn-group date" data-provide="datepicker">
+                      <input type="text" class="btn btn-primary"   value="2021-01-01" onchange="filtro()" id="data_inicio"  >
+                        <button type="button" class="btn btn-success "><i class="fa fa-fw  fa-calendar"></i></button>
+               
+                    </div>
+                    
+                    <small class="label btn-default btn-sm" > <font style="vertical-align: inherit;" ><font style="vertical-align: inherit;">Fim:</font></font></small>
+                      <div class="btn-group date" data-provide="datepicker">
+                      <input type="text"  class="btn btn-primary"   value="2022-01-01" onchange="filtro()" id="data_fim" >
+                     
+                        <button type="button" class="btn btn-success "><i class="fa fa-fw  fa-calendar"></i> </button>
+               
+                    </div>
+                 
+                            
+                     
+                 <a class="btn btn-default" onclick="filtro()"><i class="fa fa-fw fa-refresh"></i> </a>
+                  
+                 
+           
+          </div>
+          <br>
+          <p></p>
+        </div>
+       
+        <!-- /.box-body -->
+  
+  
+      </div>
+    </div>
    
     <!-- Main content -->
       <!-- Main content -->
@@ -100,7 +151,7 @@ $n=0;
   
             <div class="box box-success">
               <div class="box-header with-border">
-                <h3 class="box-title">Gráfico de Barra</h3>
+                <h3 class="box-title">Total de Vendas por Cliente</h3>
   
                 <div class="box-tools pull-right">
                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -112,10 +163,8 @@ $n=0;
                 <div class="chart" id="barCharts">
                   <canvas id="barChart" style="height:230px"></canvas>
                 </div>
-                <br><br><br><br>
-                <div class="box-header with-border">
-                  <h3 class="box-title">Gráfico de Pizza</h3>
-                </div>
+                <br><br>
+               
                 <div class="box-body" id="pieCharts">
                   <canvas id="pieChart" style="height:300px"></canvas>
                 </div>

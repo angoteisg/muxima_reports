@@ -1,4 +1,4 @@
-@extends('pdf.include.layout_vertical',['titulo'=>"Artigos Indisponiveis"])
+@extends('pdf.include.layout_vertical',['titulo'=>"Artigos Disponiveis"])
 
 
 @section('titulo')
@@ -7,7 +7,7 @@
 
 @section('content')
 
-    <h2  style="text-align: center; margin-top: 50px;  margin-bottom: 50px; "><u>Artigos Indisponivel</u></h2>
+    <h2  style="text-align: center; margin-top: 50px;  margin-bottom: 50px; "><u>Artigos Disponiveis</u></h2>
 
     <table class="principal">
         <tr class="cabeca">

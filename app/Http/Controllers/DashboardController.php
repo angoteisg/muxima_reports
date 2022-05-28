@@ -17,11 +17,14 @@ class DashboardController extends Controller
          $totalVenda = $vendas->qtdFacturas('AKZ','2010-01-01',now()->format('Y-m-d'));
          $totalVendas = json_decode($totalVenda->getContent());
          $totalArtigos= json_decode($artigos->qtdArtigos());
-
+        $clientes = $vendas->topVendaCliente('AKZ','2010-01-01',now()->format('Y-m-d'));
+        $clientes=count(json_decode($clientes->getContent()));
+        $dado= $vendas->topVendaArtigo('AKZ', '2010-01-01', now()->format('Y-m-d'));
+        $dados=  $dado->getContent();
  
         
         
-        return view('dashboard.dashboard',compact('totalVendas','totalArtigos'));
+        return view('dashboard.dashboard',compact('totalVendas','totalArtigos','clientes','dados'));
     }
 
     

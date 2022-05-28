@@ -17,10 +17,10 @@
         <small>Top 5</small>
       </h1>
       <ol class="breadcrumb">
-        <a href="{{ route('artigos.artigosVendidosListasImprimir',['AKZ','2021-01-01','2022-01-01']) }}" class="btn btn-primary btn-sm" id="gerarPDF" ><i class="fa fa-fw fa-print"></i></a>
+       {{-- <ahref="route('artigos.artigosVendidosListasImprimir',['AKZ','2021-01-01','2022-01-01']) " class="btn btn-primary btn-sm" id="gerarPDF" ><i class="fa fa-fw fa-print"></i></a>
  
         <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default"> <i class="fa fa-fw fa-filter"></i>      </a>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-        <li><a href="/dashboard"><i class="fa fa-dashboard"></i>  Página Inicial</a></li>
+       --}} <li><a href="/dashboard"><i class="fa fa-dashboard"></i>  Página Inicial</a></li>
         <li><a href="#">Vendas</a></li>
         <li class="active"> <a href="{{ route('artigos.artigosVendidosGraficos') }}"> Artigos mais Vendidos <small class="label pull-right" style="color: green;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Top 5</font></font></small> </a></li>
  
@@ -28,9 +28,52 @@
     </section>
 
     <br>
-    <br>
-    <br>
-    
+ 
+    <div class="col-md-12">
+      <div class="box box-success ">
+        <div class="box-header with-border">
+          <h3 class="box-title"><i class="fa fa-fw  fa-object-group"></i> Artigos</h3>
+  
+          <div class="box-tools pull-right">
+  
+           <a href="{{ route('pdf.report_artigosVendidos',['AKZ','2010-01-01','2022-01-01']) }}" id="gerarPDF" target="_blank" class="btn btn-default"><i class="fa fa-fw fa-file-pdf-o"> </i>PDF</a>
+           
+                  
+                    <select class="btn btn-primary"  name="moeda" onchange="filtro()" id="moeda" >
+                    <option disabled selected value="AKZ">Moeda</option>
+                      <option value="AKZ">Kwanza</option>
+                      <option value="EUR">Euro</option>
+                      <option value="USD">Dolar</option>
+                    </select>
+                    <small class="label btn-default btn-sm" > <font style="vertical-align: inherit;" ><font style="vertical-align: inherit;">Inicio:</font></font></small>
+  
+                    <div class="btn-group date" data-provide="datepicker">
+                      <input type="text" class="btn btn-primary"   value="2021-01-01" onchange="filtro()" id="data_inicio"  >
+                        <button type="button" class="btn btn-success "><i class="fa fa-fw  fa-calendar"></i></button>
+               
+                    </div>
+                    
+                    <small class="label btn-default btn-sm" > <font style="vertical-align: inherit;" ><font style="vertical-align: inherit;">Fim:</font></font></small>
+                      <div class="btn-group date" data-provide="datepicker">
+                      <input type="text"  class="btn btn-primary"   value="2022-01-01" onchange="filtro()" id="data_fim" >
+                     
+                        <button type="button" class="btn btn-success "><i class="fa fa-fw  fa-calendar"></i> </button>
+               
+                    </div>
+                 
+                  
+                 
+           
+          </div>
+          <br>
+          <p></p>
+        </div>
+       
+        <!-- /.box-body -->
+  
+  
+      </div>
+    </div>
     <!-- Main content -->
     <section class="content" >
      
@@ -181,7 +224,7 @@
 
     </section>
     <!-- /.content -->
-  </div>
+  </div>{{--
   <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -200,11 +243,11 @@
                     <option value="USD">Dolar</option>
                   </select>
                   <label for="data_inicio">Inicio:</label>
-              <input type="date" class="form-control" value="2021-01-01" id="data_inicio"  >
+              <input type="date" class="form-control"  value="2021-01-01" id="data_inicio"  >
             
               
               <label for="data_fim">Fim:</label>
-                <input type="date" class="form-control" value="2022-01-01" id="data_fim" >
+                <input type="date" class="form-control"  value="2022-01-01" id="data_fim" >
               </ol>
         </div>
         <div class="modal-footer">
@@ -213,7 +256,7 @@
         </div>
       </div>
       <!-- /.modal-content -->
-    </div>
+    </div>--}}
     <!-- /.modal-dialog -->
   </div>
   @endsection

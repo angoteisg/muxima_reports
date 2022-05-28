@@ -18,16 +18,64 @@
         <small>Vendas</small>
       </h1>
       <ol class="breadcrumb">
-        <a href="{{ route('artigos.artigosVendidosListasImprimir',['AKZ','2021-01-01','2022-01-01']) }}" class="btn btn-primary btn-sm" id="gerarPDF" ><i class="fa fa-fw fa-print"></i></a>
+       {{-- <ahref="route('artigos.artigosVendidosListasImprimir',['AKZ','2021-01-01','2022-01-01']) " class="btn btn-primary btn-sm" id="gerarPDF" ><i class="fa fa-fw fa-print"></i></a>
  
         <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default"> <i class="fa fa-fw fa-filter"></i>      </a>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-        <li><a href="/dashboard"><i class="fa fa-dashboard"></i>  Página Inicial</a></li>
+        --}}<li><a href="/dashboard"><i class="fa fa-dashboard"></i>  Página Inicial</a></li>
         <li><a href="#">Vendas</a></li>
         <li class="active"> <a href="{{ route('artigos.artigosVendidosGraficos') }}"> Distribuição Mensal <small class="label pull-right" style="color: green;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Meses</font></font></small> </a></li>
  
       </ol>
     </section>
+    <br>
+    <div class="col-md-12">
+    <div class="box box-success ">
+      <div class="box-header with-border">
+        <h3 class="box-title"><i class="fa fa-fw fa-calendar"></i> Distribuição Mensal</h3>
 
+        <div class="box-tools pull-right">
+
+         <a href="{{ route('pdf.report_distribuicaoMensal',['AKZ','2021-01-01','2022-01-01']) }}" id="gerarPDF" target="_blank" class="btn btn-default"><i class="fa fa-fw fa-file-pdf-o"> </i>PDF</a>
+        
+               
+                  <select class="btn btn-primary"  name="moeda" onchange="filtro()" id="moeda" >
+                  <option disabled selected value="AKZ">Moeda</option>
+                    <option value="AKZ">Kwanza</option>
+                    <option value="EUR">Euro</option>
+                    <option value="USD">Dolar</option>
+                  </select>
+              
+            
+
+               
+                <select class="btn btn-primary" name="ano" onchange="filtro()"  id="ano">
+                  <option value="2010" disabled selected>Ano</option>
+                  <option value="2010">2010</option>
+                  <option value="2011">2011</option>
+                  <option value="2012">2012</option>
+                  <option value="2013">2013</option>
+                  <option value="2014">2014</option>
+                  <option value="2015">2015</option>
+                  <option value="2016">2016</option>
+                  <option value="2017">2017</option>
+                  <option value="2018">2018</option>
+                  <option value="2019">2019</option>
+                  <option value="2020">2020</option>
+                  <option value="2022">2022</option>
+
+                </select>
+               
+         
+        </div>
+        <br>
+        <br>
+      </div>
+     
+      <!-- /.box-body -->
+
+
+    </div>
+  </div>
     <br>
     <br>
     <br>
@@ -63,6 +111,8 @@
               <h3 class="box-title">Lista de Meses</h3>
 
               <div class="box-tools pull-right">
+               {{-- <ahref="route('artigos.artigosVendidosListasImprimir',['AKZ','2021-01-01','2022-01-01']) " class="btn btn-primary btn-sm" id="gerarPDF" ><i class="fa fa-fw fa-print"></i></a>
+ --}}
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -101,9 +151,9 @@
           </div>
 
         <!-- LINE CHART -->
-        <div class="box box-info">
+        <div class="box box-success">
           <div class="box-header with-border">
-            <h3 class="box-title">Gráfico de Linha</h3>
+            <h3 class="box-title">Análise de Picos</h3>
 
             <div class="box-tools pull-right">
               <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -185,7 +235,7 @@
     </section>
     <!-- /.content -->
   </div>
-  <div class="modal fade" id="modal-default">
+  {{--<div class="modal fade" id="modal-default">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -195,7 +245,7 @@
         </div>
         <div class="modal-body">
                   <ol class="form-inline"  style="margin:0 auto" width="auto"> 
-                <label for="moeda">Moeda:</label>
+                <label for="moeda">Moeda:</label> 
                   <select class="form-control" name="moeda" id="moeda" >
                   
                     <option selected value="AKZ">Kwanza</option>
@@ -232,7 +282,7 @@
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
           <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="filtro()">Submeter</button>
         </div>
-      </div>
+      </div>--}}
       <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->

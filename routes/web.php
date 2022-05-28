@@ -81,10 +81,18 @@ Route::get('/artigosIndisponiveisLista',[ArtigoController::class,'artigosIndispo
 Route::get('/artigos/quantidade/',[ArtigoController::class,'qtdArtigos'])->name('artigos.quatidade');
 Route::get('/artigos/disponiveis/',[ArtigoController::class,'artigosDisponiveis'])->name('artigos.disponiveis');
 Route::get('/artigos/indisponiveis/',[ArtigoController::class,'artigosIndisponiveis'])->name('artigos.indisponiveis');
+ 
 
 //Listagens dos reports em PDF - By. Etevaldo Antunes
 Route::get('/pdf/artigos/indisponiveis/',['App\Http\Controllers\PdfController','report_artigosIndisponiveis'])->name('pdf.artigosIndisponiveis');
+Route::get('/pdf/artigos/disponiveis/',['App\Http\Controllers\PdfController','report_artigosDisponiveis'])->name('pdf.artigosDisponiveis');
 Route::get('/pdf/vendas/artigos/',['App\Http\Controllers\PdfController','report_topVendaArtigo'])->name('pdf.report_topVendaArtigo');
+Route::get('/pdf/vendas/artigosVendidos/{moeda}/{data_inicio}/{data_fim}',['App\Http\Controllers\PdfController','report_artigosVendidos'])->name('pdf.report_artigosVendidos');
+Route::get('/pdf/vendas/clientes/{moeda}/{data_inicio}/{data_fim}',['App\Http\Controllers\PdfController','report_clientes'])->name('pdf.report_clientes');
+Route::get('/pdf/vendas/distribuicaoMensal/{moeda}/{data_inicio}/{data_fim}',['App\Http\Controllers\PdfController','report_distribuicaoMensal'])->name('pdf.report_distribuicaoMensal');
+Route::get('/pdf/vendas/distribuicaoMensalCliente/{moeda}/{data_inicio}/{data_fim}/{cliente}',['App\Http\Controllers\PdfController','report_distribuicaoMensalClientes'])->name('pdf.report_distribuicaoMensalCliente');
+
+
 
 //Reports Referentes a Vendas
 Route::get('/vendas/quantidade/facturas/{moeda}/{data_inicio}/{data_fim}',[VendasController::class,'qtdFacturas'])->name('vendas.quantidade.facturas');

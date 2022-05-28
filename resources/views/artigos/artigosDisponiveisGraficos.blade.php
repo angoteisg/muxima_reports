@@ -17,20 +17,41 @@ $n=0;
       </h1>
       <ol class="breadcrumb">
 
-        <a href="{{ route('artigos.artigosVendidosListasImprimir',['AKZ','2021-01-01','2022-01-01']) }}" class="btn btn-primary btn-sm" id="gerarPDF" ><i class="fa fa-fw fa-print"></i></a>
+      {{-- <ahref="route('artigos.artigosVendidosListasImprimir',['AKZ','2021-01-01','2022-01-01']) }}" class="btn btn-primary btn-sm" id="gerarPDF" ><i class="fa fa-fw fa-print"></i></a>
         &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-       
+       --}}
         <li><a href="/dashboard"><i class="fa fa-dashboard"></i>  Página Inicial</a></li>
         <li><a href="#">Artigos</a></li>
         <li class="active"> <a href="{{ route('artigos.artigosDisponiveisGraficos') }}"> Artigos Disponiveis <small class="label pull-right" style="color: green;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Top 5</font></font></small> </a></li>
  
       </ol>
     </section>
- 
+ <br>
     <!-- Main content -->
-    <br>
+    <div class="col-md-12">
+      <div class="box box-success ">
+        <div class="box-header with-border">
+          <h3 class="box-title"><i class="fa fa-fw  fa-object-group"></i> Artigos</h3>
   
-    <br><br>
+          <div class="box-tools pull-right">
+  
+           <a href="{{ route('pdf.artigosDisponiveis') }}" target="_blank" class="btn btn-default"><i class="fa fa-fw fa-file-pdf-o"> </i>PDF</a>
+          
+                 
+                   
+                  
+                 
+           
+          </div>
+          <br>
+          <p></p>
+        </div>
+       
+        <!-- /.box-body -->
+  
+  
+      </div>
+    </div>
   
      <!-- Main content -->
      <section class="content" >

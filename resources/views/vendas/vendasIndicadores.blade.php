@@ -13,9 +13,9 @@
        
       </h1>
       <ol class="breadcrumb">
-        <a href="{{ route('artigos.artigosVendidosListasImprimir',['AKZ','2021-01-01','2022-01-01']) }}" class="btn btn-primary btn-sm" id="gerarPDF" ><i class="fa fa-fw fa-print"></i></a>
+       {{-- <ahref="route('artigos.artigosVendidosListasImprimir',['AKZ','2021-01-01','2022-01-01']) " class="btn btn-primary btn-sm" id="gerarPDF" ><i class="fa fa-fw fa-print"></i></a>
         <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default"> <i class="fa fa-fw fa-filter"></i>      </a>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-     
+     --}}
         <li><a href="/dashboard"><i class="fa fa-dashboard"></i>  Página Inicial</a></li>
         <li><a href="#">Vendas</a></li>
         <li class="active"> <a href="{{ route('artigos.vendasIndicadores') }}"> Vendas <small class="label pull-right" style="color:magenta;"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Geral</font></font></small> </a></li>
@@ -23,7 +23,7 @@
       </ol>
     </section>
 
-  
+    
 
      
     <section class="content">
@@ -41,7 +41,7 @@
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="#" class="small-box-footer">Ver mais... <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="{{ route('artigos.artigosVendidosGraficos') }}" class="small-box-footer">Ver mais... <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -56,7 +56,7 @@
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="#" class="small-box-footer">Ver mais... <i class="fa fa-arrow-circle-right"></i></a>
+              <a  class="small-box-footer"> <i class="fa fa-bullseye"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -64,14 +64,14 @@
             <!-- small box -->
             <div class="small-box bg-yellow">
               <div class="inner">
-                <h3>{{ $totalVendas->total }}</h3>
+                <h3>0</h3>
   
-                <p>Outro</p>
+                <p>Notas de Débito</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="#" class="small-box-footer">Ver mais... <i class="fa fa-arrow-circle-right"></i></a>
+              <a  class="small-box-footer"> <i class="fa fa-bullseye"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -79,19 +79,68 @@
             <!-- small box -->
             <div class="small-box bg-red">
               <div class="inner">
-                <h3>65</h3>
+                <h3>0</h3>
   
-                <p>Outro</p>
+                <p>Proformas</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
               </div>
-              <a href="#" class="small-box-footer">Ver mais... <i class="fa fa-arrow-circle-right"></i></a>
+              <a  class="small-box-footer"> <i class="fa fa-bullseye"></i></a>
             </div>
           </div>
           <!-- ./col -->
         </div>
-  <section>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-success ">
+        <div class="box-header with-border">
+          <h3 class="box-title"><i class="fa fa-fw  fa-money"></i> Indicadores</h3>
+  
+          <div class="box-tools pull-right">
+  {{--
+           <a href="{{ route('artigos.artigosVendidosListasImprimir',['AKZ','2021-01-01','2022-01-01']) }}" class="btn btn-default"><i class="fa fa-fw fa-file-pdf-o"> </i>PDF</a>
+          --}}
+                 
+                    <select class="btn btn-primary"  name="moeda" onchange="filtro()" id="moeda" >
+                    <option disabled selected value="AKZ">Moeda</option>
+                      <option value="AKZ">Kwanza</option>
+                      <option value="EUR">Euro</option>
+                      <option value="USD">Dolar</option>
+                    </select>
+                    <small class="label btn-default btn-sm" > <font style="vertical-align: inherit;" ><font style="vertical-align: inherit;">Inicio:</font></font></small>
+  
+                    <div class="btn-group date" data-provide="datepicker">
+                      <input type="text" class="btn btn-primary"   value="2021-01-01" onchange="filtro()" id="data_inicio"  >
+                        <button type="button" class="btn btn-success "><i class="fa fa-fw  fa-calendar"></i></button>
+               
+                    </div>
+                    
+                    <small class="label btn-default btn-sm" > <font style="vertical-align: inherit;" ><font style="vertical-align: inherit;">Fim:</font></font></small>
+                      <div class="btn-group date" data-provide="datepicker">
+                      <input type="text"  class="btn btn-primary"   value="2022-01-01" onchange="filtro()" id="data_fim" >
+                     
+                        <button type="button" class="btn btn-success "><i class="fa fa-fw  fa-calendar"></i> </button>
+               
+                    </div>
+                 
+                  
+                 
+           
+          </div>
+          <br>
+          <p></p>
+        </div>
+       
+        <!-- /.box-body -->
+  
+  
+      </div>
+    </div>
+  </div>
+      </section>
+
+     
         
     {{--<div class=" box box-default " style="width:49%; float: right;"  >
       <div class="box-header with-border"   >

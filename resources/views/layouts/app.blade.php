@@ -80,10 +80,10 @@
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->
           <li class="dropdown messages-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
               <span class="label label-success">0</span>
-            </a>
+            </a>--}}
            {{--<ul class="dropdown-menu">
               <li class="header">You have 4 messages</li>
               <li>
@@ -157,10 +157,10 @@
           </li>
           <!-- Notifications: style can be found in dropdown.less -->
           <li class="dropdown notifications-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+           {{-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
               <span class="label label-warning">0</span>
-            </a>
+            </a>--}}
             {{--<ul class="dropdown-menu">
               <li class="header">You have 10 notifications</li>
               <li>
@@ -199,10 +199,10 @@
           </li>
           <!-- Tasks: style can be found in dropdown.less -->
           <li class="dropdown tasks-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+           {{-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-flag-o"></i>
               <span class="label label-danger">0</span>
-            </a>
+            </a>--}}
             {{-- <ul class="dropdown-menu">
               <li class="header">You have 9 tasks</li>
               <li>
@@ -278,13 +278,16 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{{ asset('assets/dist/img/user2-160x160.jpg')}}" class="user-image" alt="User Image">
+              <img src="{{ asset('assets/dist/img/78-785827_user-profile-avatar-login-account-male-user-icon.png')}}" class="user-image" alt="User Image">
               <span class="hidden-xs">{{ Auth::user()->name }}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{ asset('assets/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
+          
+                <img src="{{ asset('assets/dist/img/78-785827_user-profile-avatar-login-account-male-user-icon.png')}}" class="img-circle" alt="User Image">
+             
+         
 
                 <p>
                   {{ Auth::user()->name }} - {{ Auth::user()->email }}
@@ -339,7 +342,8 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{ asset('assets/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
+     
+          <img src="{{ asset('assets/dist/img/78-785827_user-profile-avatar-login-account-male-user-icon.png')}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>{{ Auth::user()->name }}</p>
@@ -362,7 +366,7 @@
       {{-- <liclass="header">MenudeNavegação</li> --}}
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Vendas</span>
+            <i class="fa fa-fw  fa-money"></i> <span>Vendas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -400,9 +404,9 @@
 
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Artigos</span>
+            <i class="fa fa-fw  fa-object-group"></i> <span>Artigos</span>
             <span class="pull-right-container">
-              <i class="   fa-angle-left pull-right"></i>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
@@ -411,10 +415,10 @@
        {{-- <li><ahref="route('artigos.artigosIndisponiveisLista')}}"><i class="fa fa-circle-o"></i>Artigos Indisponiveis <small class="label pull-right bg-yellow"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lista</font></font></small></a></li>--}}
         
       
-      </ul>
+      </ul> 
         </li>
 
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Geral</span></a></li>
+        {{-- <li><ahref="#"><iclass="fafa-circle-otext-red"></i><span>Geral</span></a></li> --}}
        
       </ul>
     </section>
